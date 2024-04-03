@@ -1,0 +1,20 @@
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5430/message_processor
+    username: postgres_mp
+    password: postgres_mp
+
+grpc:
+  server:
+    port: 9090
+    reflection-service-enabled: true
+
+management.endpoints.web.exposure.include: metrics
+management.endpoint.metrics.enabled: true
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG

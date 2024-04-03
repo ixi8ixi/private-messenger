@@ -1,19 +1,62 @@
-plugins {
-    id 'java'
-}
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 group = 'com.earuile'
 version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply plugin: 'java'
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
+    group = rootProject.group
+    version = rootProject.version
 
-test {
-    useJUnitPlatform()
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation libs.bundles.minimal.spring.boot
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+
+        testImplementation libs.testcontainers.core
+        testImplementation libs.testcontainers.jupiter
+        testImplementation libs.jupiter
+
+        testImplementation libs.spring.test
+    }
+
+    test {
+        jvmArgs([
+                '--enable-preview',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED',
+                '--add-opens', 'jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED'
+        ])
+        useJUnitPlatform()
+        systemProperty "junit.jupiter.extensions.autodetection.enabled", "true"
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat TestExceptionFormat.FULL
+            showExceptions true
+            showCauses true
+            showStackTraces true
+        }
+    }
+
+    jar {
+        enabled = false
+    }
+
 }

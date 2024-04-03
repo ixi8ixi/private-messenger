@@ -1,0 +1,33 @@
+plugins {
+    alias libs.plugins.protobuf.plugin
+    alias libs.plugins.spring.plugin
+}
+
+dependencies {
+    implementation project(':common')
+
+    implementation libs.bundles.minimal.db
+    implementation libs.bundles.minimal.grpc
+
+    testImplementation libs.testcontainers.postgresql
+
+    testImplementation libs.grpc.test
+
+    testImplementation testFixtures(project(':common'))
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get()
+    }
+
+    def grpcArtifact = libs.grpc.gen
+    plugins {
+        grpc {
+            artifact = grpcArtifact.get()
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {grpc{}}
+    }
+}

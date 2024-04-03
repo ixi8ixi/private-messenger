@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db_mp:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=message_processor
+      - POSTGRES_USER=postgres_mp
+      - POSTGRES_PASSWORD=postgres_mp
+    ports:
+      - '5430:5432'
+    volumes:
+      - db_mp:/var/lib/postgresql/data
+
+volumes:
+  db_mp:
+    driver: local
