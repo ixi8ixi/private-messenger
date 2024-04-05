@@ -2,7 +2,7 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5430/message_processor
+    url: jdbc:postgresql://localhost:5430/message_processor
     username: postgres_mp
     password: postgres_mp
 
