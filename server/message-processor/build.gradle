@@ -8,6 +8,8 @@ dependencies {
 
     implementation libs.bundles.minimal.db
     implementation libs.bundles.minimal.grpc
+    implementation libs.openapi.starter
+    implementation libs.openapi.webflux
 
     testImplementation libs.testcontainers.postgresql
 

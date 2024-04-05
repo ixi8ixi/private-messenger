@@ -1,4 +1,4 @@
-package com.earuile.mp;
+package com.earuile.bubble.mp;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
