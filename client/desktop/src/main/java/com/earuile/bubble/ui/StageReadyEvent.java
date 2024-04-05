@@ -1,4 +1,4 @@
-package com.earuile.bubble.fxapp.events;
+package com.earuile.bubble.ui;
 
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationEvent;
