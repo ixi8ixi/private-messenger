@@ -3,12 +3,18 @@ package com.earuile.bubble.ui;
 import com.earuile.bubble.ClientApplication;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.InputStream;
+import java.net.URL;
 
 public class JavaFxApplication extends Application {
 
@@ -23,23 +29,7 @@ public class JavaFxApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Bubble");
-
-        primaryStage.setWidth(600);
-        primaryStage.setHeight(600);
-
-        InputStream iconStream = getClass().getResourceAsStream("soap-bubble.png");
-        Image image = new Image(iconStream);
-        primaryStage.getIcons().add(image);
-//
-//        Label helloWorldLabel = new Label("Hello world!");
-//        helloWorldLabel.setAlignment(Pos.CENTER);
-//        Scene primaryScene = new Scene(helloWorldLabel);
-//        primaryStage.setScene(primaryScene);
-
-        primaryStage.show();
-
-//        context.publishEvent(new StageReadyEvent(primaryStage));
+        context.publishEvent(new StageReadyEvent(primaryStage));
     }
 
     @Override

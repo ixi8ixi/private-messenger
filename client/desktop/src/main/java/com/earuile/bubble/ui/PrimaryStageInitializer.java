@@ -1,13 +1,18 @@
 package com.earuile.bubble.ui;
 
 import com.earuile.bubble.ui.controllers.MyController;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.SneakyThrows;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+
+import java.io.InputStream;
 
 @Component
 public class PrimaryStageInitializer implements ApplicationListener<StageReadyEvent> {
@@ -21,12 +26,19 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
-        Stage stage = event.stage;
-        System.out.println(fxWeaver);
-        Parent check = fxWeaver.loadView(MyController.class);
-        System.out.println(check);
-        Scene scene = new Scene(check, 400, 300);
-        stage.setScene(scene);
-        stage.show();
+        Stage primaryStage = event.stage;
+        primaryStage.setTitle("Bubble");
+
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(600);
+
+        InputStream iconStream = getClass().getResourceAsStream("soap-bubble.png");
+        Image image = new Image(iconStream);
+        primaryStage.getIcons().add(image);
+
+        Scene scene = new Scene(fxWeaver.loadView(MyController.class), 400, 300);
+        primaryStage.setScene(scene);
+
+        primaryStage.show();
     }
 }
