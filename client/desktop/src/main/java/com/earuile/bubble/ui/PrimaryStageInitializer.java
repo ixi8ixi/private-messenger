@@ -1,6 +1,6 @@
-package com.earuile.bubble.fxapp.events;
+package com.earuile.bubble.ui;
 
-import com.earuile.bubble.controllers.MyController;
+import com.earuile.bubble.ui.controllers.MyController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

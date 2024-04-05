@@ -1,4 +1,4 @@
-package com.earuile.bubble.controllers;
+package com.earuile.bubble.ui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
