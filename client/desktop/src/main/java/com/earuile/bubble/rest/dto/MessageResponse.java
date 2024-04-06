@@ -1,3 +1,3 @@
 package com.earuile.bubble.rest.dto;
 
-public record MessageResponse(String message) {}
+public record MessageResponse(String time) {}

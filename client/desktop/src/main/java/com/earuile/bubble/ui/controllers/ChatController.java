@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @FxmlView("main-scene.fxml")
 @RequiredArgsConstructor
 public class ChatController {
-    private final SendMessageRestService sendMessageRestService;
-
     @FXML
     private ListView<String> messagesArea;
 

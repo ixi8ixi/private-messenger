@@ -33,7 +33,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Image image = new Image(iconStream);
         primaryStage.getIcons().add(image);
 
-        Scene scene = new Scene(fxWeaver.loadView(ChatController.class), 400, 300);
+        Scene scene = new Scene(fxWeaver.loadView(ChatController.class), 600, 600);
         primaryStage.setScene(scene);
 
         primaryStage.show();
