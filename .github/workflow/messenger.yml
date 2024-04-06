@@ -1,9 +1,9 @@
 name: "messendger CI"
 on:
   push:
-    branches: ["main"]
+    branches: ["master"]
   pull_request:
-    branches: ["main"]
+    branches: ["master"]
 
 jobs:
   formatting:
@@ -20,3 +20,4 @@ jobs:
           skip-commit: true
       - name: Print diffs
         run: git --no-pager diff --exit-code
+        
