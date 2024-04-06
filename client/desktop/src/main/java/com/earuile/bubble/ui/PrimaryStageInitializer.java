@@ -1,12 +1,9 @@
 package com.earuile.bubble.ui;
 
-import com.earuile.bubble.ui.controllers.MyController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import com.earuile.bubble.ui.controllers.ChatController;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import lombok.SneakyThrows;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -36,7 +33,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Image image = new Image(iconStream);
         primaryStage.getIcons().add(image);
 
-        Scene scene = new Scene(fxWeaver.loadView(MyController.class), 400, 300);
+        Scene scene = new Scene(fxWeaver.loadView(ChatController.class), 400, 300);
         primaryStage.setScene(scene);
 
         primaryStage.show();

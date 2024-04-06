@@ -1,4 +1,4 @@
-package com.earuile.bubble.rest;
+package com.earuile.bubble.rest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

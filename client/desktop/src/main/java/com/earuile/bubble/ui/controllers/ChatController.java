@@ -1,25 +1,19 @@
 package com.earuile.bubble.ui.controllers;
 
-import com.earuile.bubble.rest.MessengerServerRestService;
+import com.earuile.bubble.rest.SendMessageRestService;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import lombok.RequiredArgsConstructor;
-import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
-import java.net.http.HttpRequest;
 
 @Component
 @FxmlView("main-scene.fxml")
 @RequiredArgsConstructor
-public class MyController {
-    private final MessengerServerRestService messengerServerRestService;
+public class ChatController {
+    private final SendMessageRestService sendMessageRestService;
 
     @FXML
     private ListView<String> messagesArea;
@@ -39,8 +33,8 @@ public class MyController {
                 userMessage.clear();
                 messagesArea.getItems().add("Me >>  " + message);
 
-                String serverMessage = messengerServerRestService.sendMessage(message);
-                messagesArea.getItems().add("Server >>  " + serverMessage);
+//                String serverMessage = sendMessageRestService.sendMessage(message);
+//                messagesArea.getItems().add("Server >>  " + serverMessage);
             }
         });
     }
