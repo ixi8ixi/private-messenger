@@ -16,7 +16,7 @@ public class MessengerServerRestService {
     public String sendMessage(String message) {
         HttpEntity<MessageRequest> request = new HttpEntity<>(new MessageRequest(message));
         ResponseEntity<MessageResponse> response = restTemplate
-                .postForEntity("PLACEHOLDER", request, MessageResponse.class);
+                .postForEntity("http://192.168.31.54:8082/mp/message/new", request, MessageResponse.class);
         return response.getBody().message();
     }
 }

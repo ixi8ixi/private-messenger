@@ -2,6 +2,7 @@ package com.earuile.bubble.ui.controllers;
 
 import com.earuile.bubble.rest.MessengerServerRestService;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -21,7 +22,7 @@ public class MyController {
     private final MessengerServerRestService messengerServerRestService;
 
     @FXML
-    private TextArea messagesArea;
+    private ListView<String> messagesArea;
 
     @FXML
     private TextField userMessage;
@@ -29,17 +30,17 @@ public class MyController {
     @FXML
     public void initialize() {
         messagesArea.setEditable(false);
-        messagesArea.setMouseTransparent(true);
-        messagesArea.setFocusTraversable(false);
+//        messagesArea.setMouseTransparent(true);
+//        messagesArea.setFocusTraversable(false);
 
         userMessage.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 String message = userMessage.getText();
                 userMessage.clear();
-                messagesArea.appendText("Me >>  " + message + System.lineSeparator());
+                messagesArea.getItems().add("Me >>  " + message);
 
                 String serverMessage = messengerServerRestService.sendMessage(message);
-                messagesArea.appendText("Server >>  " + serverMessage + System.lineSeparator());
+                messagesArea.getItems().add("Server >>  " + serverMessage);
             }
         });
     }

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" spacing="16.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.earuile.bubble.ui.controllers.MyController">
-   <TextArea fx:id="messagesArea" prefHeight="512.0" prefWidth="512.0" />
+   <ListView fx:id="messagesArea" prefHeight="512.0" prefWidth="512.0" />
    <TextField fx:id="userMessage" prefHeight="32.0" prefWidth="512.0" />
 
 </VBox>
