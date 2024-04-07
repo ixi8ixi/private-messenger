@@ -8,9 +8,8 @@ import java.util.List;
 
 @Builder
 public record TextMessageGetResponse(
-        @NotBlank String userId,
         @NotBlank String chatId,
         List<TextMessage> textMessages,
-        @NotBlank String time
+        long time
 ) {
 }

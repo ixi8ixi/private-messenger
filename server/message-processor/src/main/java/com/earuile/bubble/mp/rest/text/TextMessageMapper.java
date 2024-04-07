@@ -1,5 +1,6 @@
 package com.earuile.bubble.mp.rest.text;
 
+import com.earuile.bubble.mp.public_interface.Message;
 import com.earuile.bubble.mp.public_interface.text.content.Text;
 import com.earuile.bubble.mp.public_interface.text.dto.TextGetRequestDto;
 import com.earuile.bubble.mp.public_interface.text.dto.TextGetResponseDto;
@@ -12,18 +13,21 @@ import com.earuile.bubble.mp.rest.text.info.end_point.send.TextMessageSendReques
 import com.earuile.bubble.mp.rest.text.info.end_point.send.TextMessageSendResponse;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneOffset;
+
 @Component
 public class TextMessageMapper {
 
     public TextMessageSendResponse mapDtoToResponse(TextSendResponseDto responseDto) {
         return TextMessageSendResponse.builder()
-                .time(responseDto.time())
+                .id(responseDto.message().id())
+                .time(responseDto.message().time().toEpochSecond(ZoneOffset.UTC))
                 .build();
     }
 
     public TextSendRequestDto mapRequestToDto(TextMessageSendRequest request) {
         return TextSendRequestDto.builder()
-                .userId(request.userId())
+                .userId(request.textMessage().userId())
                 .chatId(request.chatId())
                 .text(decodeTextMessageToText(request.textMessage()))
                 .build();
@@ -31,9 +35,8 @@ public class TextMessageMapper {
 
     public TextMessageGetResponse mapDtoToResponse(TextGetResponseDto responseDto) {
         return TextMessageGetResponse.builder()
-                .userId(responseDto.userId())
                 .chatId(responseDto.chatId())
-                .textMessages(responseDto.texts()
+                .textMessages(responseDto.messages()
                         .stream()
                         .map(this::encodeTextToTextMessage)
                         .toList())
@@ -58,9 +61,11 @@ public class TextMessageMapper {
                 .build();
     }
 
-    private TextMessage encodeTextToTextMessage(Text text) {
+    private TextMessage encodeTextToTextMessage(Message<Text> message) {
         return TextMessage.builder()
-                .textData(text.text() + ", hello!")
+                .userId(message.userId())
+                .textData(message.content().text() + ", hello!")
+                .id(message.id())
                 .build();
     }
 

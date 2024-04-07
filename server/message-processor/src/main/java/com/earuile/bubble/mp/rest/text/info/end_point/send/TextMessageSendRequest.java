@@ -6,7 +6,6 @@ import lombok.Builder;
 
 @Builder
 public record TextMessageSendRequest(
-    @NotBlank String userId,
     @NotBlank String chatId,
     TextMessage textMessage
 ) { }

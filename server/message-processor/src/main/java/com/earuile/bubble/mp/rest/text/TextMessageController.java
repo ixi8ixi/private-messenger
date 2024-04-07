@@ -1,7 +1,6 @@
 package com.earuile.bubble.mp.rest.text;
 
-import com.earuile.bubble.mp.core.service.text.GetMessageService;
-import com.earuile.bubble.mp.core.service.text.SaveMessageService;
+import com.earuile.bubble.mp.core.service.text.TextMessageService;
 import com.earuile.bubble.mp.rest.text.info.end_point.get.TextMessageGetRequest;
 import com.earuile.bubble.mp.rest.text.info.end_point.get.TextMessageGetResponse;
 import com.earuile.bubble.mp.rest.text.info.end_point.send.TextMessageSendRequest;
@@ -25,8 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mp/message")
 public class TextMessageController {
 
-    private final SaveMessageService saveMessageService;
-    private final GetMessageService getMessageService;
+    private final TextMessageService textMessageService;
     private final TextMessageMapper mapper;
 
     @Operation(summary = "Save message on server and send it to all its chat users")
@@ -41,7 +39,7 @@ public class TextMessageController {
     @PostMapping("/ch1")
     public TextMessageSendResponse sendMessage(@RequestBody TextMessageSendRequest request) {
         return mapper.mapDtoToResponse(
-                saveMessageService.save(
+                textMessageService.save(
                         mapper.mapRequestToDto(request)
                 )
         );
@@ -59,7 +57,7 @@ public class TextMessageController {
     @GetMapping("/ch1")
     public TextMessageGetResponse getMessage(@RequestBody TextMessageGetRequest request) {
         return mapper.mapDtoToResponse(
-                getMessageService.get(
+                textMessageService.get(
                         mapper.mapRequestToDto(request)
                 )
         );

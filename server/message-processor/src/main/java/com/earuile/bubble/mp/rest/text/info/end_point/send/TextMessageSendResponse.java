@@ -4,5 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record TextMessageSendResponse(
-    String time
-) { }
+        String id,
+        long time
+) {
+}

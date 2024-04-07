@@ -7,7 +7,9 @@ import lombok.Builder;
  */
 @Builder
 public record TextMessage(
+        String userId,
         String textData,
-        String timeData
+        String id,
+        Long timeDate
 ) {
 }

@@ -7,5 +7,5 @@ public record TextGetRequestDto(
         String userId,
         String chatId,
         int limit,
-        long lastKnownId
+        String lastKnownId
 ) { }

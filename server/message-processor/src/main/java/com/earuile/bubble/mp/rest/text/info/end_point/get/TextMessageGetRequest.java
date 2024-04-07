@@ -8,5 +8,5 @@ public record TextMessageGetRequest(
         @NotBlank String userId,
         @NotBlank String chatId,
         int limit,
-        long lastKnownId
+        String lastKnownId
 ) { }
