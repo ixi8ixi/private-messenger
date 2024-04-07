@@ -35,6 +35,8 @@ public class MessageController {
                             schema = @Schema(implementation = TextMessageSendResponse.class,
                                     description = "Server system information"))}),
             @ApiResponse(responseCode = "400", description = "Invalid request format",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Bad argument's value",
                     content = @Content)
     })
     @PostMapping("/ch1")
