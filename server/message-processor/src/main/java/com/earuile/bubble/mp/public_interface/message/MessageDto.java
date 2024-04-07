@@ -1,11 +1,11 @@
-package com.earuile.bubble.mp.public_interface;
+package com.earuile.bubble.mp.public_interface.message;
 
 import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @Builder
-public record Message<T>(
+public record MessageDto<T>(
         T content,
         String id,
         String userId,

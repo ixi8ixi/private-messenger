@@ -31,6 +31,6 @@ protobuf {
         }
     }
     generateProtoTasks {
-        all()*.plugins {grpc{}}
+        all()*.plugins { grpc {} }
     }
 }

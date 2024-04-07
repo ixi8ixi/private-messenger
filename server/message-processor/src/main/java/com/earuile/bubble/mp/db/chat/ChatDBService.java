@@ -12,7 +12,7 @@ public class ChatDBService {
     private final ChatRepository repository;
 
     public ChatEntity createAndGet(ChatEntity chat) {
-           return repository.save(chat);
+        return repository.save(chat);
     }
 
     public Optional<ChatEntity> getById(String id) {

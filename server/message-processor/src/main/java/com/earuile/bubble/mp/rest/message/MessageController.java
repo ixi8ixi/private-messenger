@@ -1,10 +1,11 @@
-package com.earuile.bubble.mp.rest.text;
+package com.earuile.bubble.mp.rest.message;
 
-import com.earuile.bubble.mp.core.service.text.TextMessageService;
-import com.earuile.bubble.mp.rest.text.info.end_point.get.TextMessageGetRequest;
-import com.earuile.bubble.mp.rest.text.info.end_point.get.TextMessageGetResponse;
-import com.earuile.bubble.mp.rest.text.info.end_point.send.TextMessageSendRequest;
-import com.earuile.bubble.mp.rest.text.info.end_point.send.TextMessageSendResponse;
+import com.earuile.bubble.mp.core.service.message.MessageService;
+import com.earuile.bubble.mp.core.service.message.text.TextMessageService;
+import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendResponse;
+import com.earuile.bubble.mp.rest.message.info.get.MessageGetRequest;
+import com.earuile.bubble.mp.rest.message.info.get.MessageGetResponse;
+import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/mp/message")
-public class TextMessageController {
-
+public class MessageController {
+    private final MessageService messageService;
     private final TextMessageService textMessageService;
-    private final TextMessageMapper mapper;
+    private final MessageMapper mapper;
 
     @Operation(summary = "Save message on server and send it to all its chat users")
     @ApiResponses(value = {
@@ -37,7 +38,7 @@ public class TextMessageController {
                     content = @Content)
     })
     @PostMapping("/ch1")
-    public TextMessageSendResponse sendMessage(@RequestBody TextMessageSendRequest request) {
+    public TextMessageSendResponse sendTextMessage(@RequestBody TextMessageSendRequest request) {
         return mapper.mapDtoToResponse(
                 textMessageService.save(
                         mapper.mapRequestToDto(request)
@@ -45,7 +46,7 @@ public class TextMessageController {
         );
     }
 
-    @Operation(summary = "Get messages from server")
+    @Operation(summary = "Get limit count messages from server after lastKnownId (or from start if it's null)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The messages were found correctly",
                     content = {@Content(mediaType = "application/json",
@@ -55,9 +56,9 @@ public class TextMessageController {
                     content = @Content)
     })
     @GetMapping("/ch1")
-    public TextMessageGetResponse getMessage(@RequestBody TextMessageGetRequest request) {
+    public MessageGetResponse getMessage(@RequestBody MessageGetRequest request) {
         return mapper.mapDtoToResponse(
-                textMessageService.get(
+                messageService.get(
                         mapper.mapRequestToDto(request)
                 )
         );

@@ -1,13 +1,13 @@
-package com.earuile.bubble.mp.rest.text.info.end_point.get;
+package com.earuile.bubble.mp.rest.message.info.get;
 
-import com.earuile.bubble.mp.rest.text.info.content.TextMessage;
+import com.earuile.bubble.mp.rest.message.text.info.content.TextMessage;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 import java.util.List;
 
 @Builder
-public record TextMessageGetResponse(
+public record MessageGetResponse(
         @NotBlank String chatId,
         List<TextMessage> textMessages,
         long time

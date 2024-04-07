@@ -1,6 +1,6 @@
-package com.earuile.bubble.mp.public_interface.text.dto;
+package com.earuile.bubble.mp.public_interface.message.text.dto;
 
-import com.earuile.bubble.mp.public_interface.text.content.Text;
+import com.earuile.bubble.mp.public_interface.message.text.content.Text;
 import lombok.Builder;
 
 @Builder

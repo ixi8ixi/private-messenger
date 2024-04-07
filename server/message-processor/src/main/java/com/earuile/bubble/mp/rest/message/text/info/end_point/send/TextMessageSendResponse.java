@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.rest.text.info.end_point.send;
+package com.earuile.bubble.mp.rest.message.text.info.end_point.send;
 
 import lombok.Builder;
 
