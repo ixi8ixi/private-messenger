@@ -24,6 +24,9 @@ dependencies {
 //    implementation libs.spring.security
     implementation libs.spring.actuator
 
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+
 //    implementation libs.spring.jpa
 //    implementation libs.postgresql.driver
 //    implementation libs.liquibase.driver

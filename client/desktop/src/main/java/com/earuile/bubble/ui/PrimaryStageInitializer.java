@@ -33,7 +33,8 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Image image = new Image(iconStream);
         primaryStage.getIcons().add(image);
 
-        Scene scene = new Scene(fxWeaver.loadView(ChatController.class), 600, 600);
+        Scene scene = new Scene(fxWeaver.loadView(ChatController.class), 520, 600);
+        scene.getStylesheets().add("/com/earuile/bubble/ui/controllers/chat-style.css");
         primaryStage.setScene(scene);
 
         primaryStage.show();

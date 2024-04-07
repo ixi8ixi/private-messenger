@@ -1,0 +1,17 @@
+#backview {
+    -fx-background-color:  #333333;
+}
+
+#messagesArea {
+    -fx-background-color:  #8C8C8C;
+    -fx-text-fill: #FFFFFF;
+}
+
+#userMessage {
+    -fx-background-color:  #8C8C8C;
+    -fx-text-fill: #FFFFFF;
+}
+
+.button {
+    -fx-background-color: #179CDE
+}

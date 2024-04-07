@@ -1,7 +1,13 @@
 package com.earuile.bubble.ui.controllers;
 
 import com.earuile.bubble.rest.SendMessageRestService;
+import com.jfoenix.controls.JFXListView;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -13,14 +19,32 @@ import org.springframework.stereotype.Component;
 @FxmlView("main-scene.fxml")
 @RequiredArgsConstructor
 public class ChatController {
+    private final SendMessageRestService sendMessageRestService;
+
     @FXML
-    private ListView<String> messagesArea;
+    private JFXListView<String> messagesArea;
+
+    ObservableList<String> list = FXCollections.observableArrayList();
 
     @FXML
     private TextField userMessage;
 
+//    @FXML
+//    private Button refreshButton;
+
+    private PullMessagesCallback pullMessagesCallback;
+
     @FXML
     public void initialize() {
+        messagesArea.setItems(list);
+//        messagesArea.setCellFactory(p -> new ListCell<>() {
+//
+//        });
+
+        pullMessagesCallback = messageList -> {
+            messagesArea.getItems().addAll(messageList);
+        };
+
         messagesArea.setEditable(false);
 //        messagesArea.setMouseTransparent(true);
 //        messagesArea.setFocusTraversable(false);
@@ -29,11 +53,14 @@ public class ChatController {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 String message = userMessage.getText();
                 userMessage.clear();
-                messagesArea.getItems().add("Me >>  " + message);
-
-//                String serverMessage = sendMessageRestService.sendMessage(message);
-//                messagesArea.getItems().add("Server >>  " + serverMessage);
+                sendMessageRestService.sendMessage(message);
+            } else if (actionEvent.getCode() == KeyCode.SHIFT) {
+                sendMessageRestService.pullMessages(pullMessagesCallback);
             }
         });
+
+//        refreshButton.setOnAction(actionEvent -> {
+//            sendMessageRestService.pullMessages(pullMessagesCallback);
+//        });
     }
 }
