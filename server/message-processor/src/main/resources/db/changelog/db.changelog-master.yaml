@@ -5,3 +5,5 @@ databaseChangeLog:
           type: postgresql
   - include:
       file: classpath:/db/changelog/changes/001-initial-schema.sql
+  - include:
+      file: classpath:/db/changelog/changes/002-initial-all-message-structure-tables.sql
