@@ -14,6 +14,8 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @Component
 @FxmlView("main-scene.fxml")
 @RequiredArgsConstructor
@@ -22,13 +24,18 @@ public class ChatController {
 
     @FXML
     private JFXListView<MessageModel> messagesArea;
-
     ObservableList<MessageModel> list = FXCollections.observableArrayList();
+    private AtomicBoolean atBottom = new AtomicBoolean(false);
 
     @FXML
     private TextField userMessage;
 
-    private final PullMessagesCallback pullMessagesCallback = messageList -> messagesArea.getItems().addAll(messageList);
+    private final PullMessagesCallback pullMessagesCallback = messageList -> {
+        messagesArea.getItems().addAll(messageList);
+        messagesArea.scrollTo(list.size() - 1);
+//        if (atBottom.get()) {
+//        }
+    };
 
     @FXML
     public void initialize() {
@@ -43,6 +50,8 @@ public class ChatController {
                 sendMessageRestService.sendMessage(message);
             }
         });
+
+//        for (Node node: li)
 
         sendMessageRestService.pullMessages(pullMessagesCallback);
     }

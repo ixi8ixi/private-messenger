@@ -1,0 +1,16 @@
+#anPane {
+    -fx-background-color:  #8C8C8C;
+    -fx-text-fill: #FFFFFF;
+}
+
+#time {
+    -fx-text-fill: #FFFFFF;
+}
+
+#text {
+    -fx-text-fill: #FFFFFF;
+}
+
+#username {
+    -fx-text-fill: #FFFFFF;
+}

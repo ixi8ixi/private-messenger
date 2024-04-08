@@ -24,6 +24,11 @@ public class MessageController extends JFXListCell<MessageModel> {
 
     private FXMLLoader loader;
 
+    @FXML
+    public void initialize() {
+        text.setWrapText(true);
+    }
+
     @Override
     protected void updateItem(MessageModel item, boolean empty) {
         super.updateItem(item, empty);
@@ -35,6 +40,8 @@ public class MessageController extends JFXListCell<MessageModel> {
             if (loader == null) {
                 loader = new FXMLLoader(getClass().getResource("message.fxml"));
                 loader.setController(this);
+
+                getStylesheets().add("com/earuile/bubble/ui/controllers/message/message-style.css");
 
                 try {
                     loader.load();
