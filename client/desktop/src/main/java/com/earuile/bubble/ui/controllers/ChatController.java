@@ -1,18 +1,17 @@
 package com.earuile.bubble.ui.controllers;
 
 import com.earuile.bubble.rest.SendMessageRestService;
+import com.earuile.bubble.rest.dto.model.MessageModel;
+import com.earuile.bubble.ui.controllers.message.MessageController;
 import com.jfoenix.controls.JFXListView;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,45 +21,34 @@ public class ChatController {
     private final SendMessageRestService sendMessageRestService;
 
     @FXML
-    private JFXListView<String> messagesArea;
+    private JFXListView<MessageModel> messagesArea;
 
-    ObservableList<String> list = FXCollections.observableArrayList();
+    ObservableList<MessageModel> list = FXCollections.observableArrayList();
 
     @FXML
     private TextField userMessage;
 
-//    @FXML
-//    private Button refreshButton;
-
-    private PullMessagesCallback pullMessagesCallback;
+    private final PullMessagesCallback pullMessagesCallback = messageList -> messagesArea.getItems().addAll(messageList);
 
     @FXML
     public void initialize() {
         messagesArea.setItems(list);
-//        messagesArea.setCellFactory(p -> new ListCell<>() {
-//
-//        });
-
-        pullMessagesCallback = messageList -> {
-            messagesArea.getItems().addAll(messageList);
-        };
-
+        messagesArea.setCellFactory(p -> new MessageController());
         messagesArea.setEditable(false);
-//        messagesArea.setMouseTransparent(true);
-//        messagesArea.setFocusTraversable(false);
 
         userMessage.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 String message = userMessage.getText();
                 userMessage.clear();
                 sendMessageRestService.sendMessage(message);
-            } else if (actionEvent.getCode() == KeyCode.SHIFT) {
-                sendMessageRestService.pullMessages(pullMessagesCallback);
             }
         });
 
-//        refreshButton.setOnAction(actionEvent -> {
-//            sendMessageRestService.pullMessages(pullMessagesCallback);
-//        });
+        sendMessageRestService.pullMessages(pullMessagesCallback);
+    }
+
+    @Scheduled(fixedDelay = 200)
+    public void refresh() {
+        sendMessageRestService.pullMessages(pullMessagesCallback);
     }
 }

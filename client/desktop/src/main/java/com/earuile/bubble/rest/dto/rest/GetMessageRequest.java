@@ -1,4 +1,4 @@
-package com.earuile.bubble.rest.dto;
+package com.earuile.bubble.rest.dto.rest;
 
 public record GetMessageRequest(
         String userId,

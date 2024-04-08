@@ -1,6 +1,7 @@
-package com.earuile.bubble.ui;
+package com.earuile.bubble;
 
 import com.earuile.bubble.ClientApplication;
+import com.earuile.bubble.ui.StageReadyEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;

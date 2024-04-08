@@ -1,10 +1,10 @@
 package com.earuile.bubble.rest;
 
 import com.earuile.bubble.rest.config.MessengerServerRestProperty;
-import com.earuile.bubble.rest.dto.*;
+import com.earuile.bubble.rest.dto.model.MessageModel;
+import com.earuile.bubble.rest.dto.rest.*;
 import com.earuile.bubble.ui.controllers.PullMessagesCallback;
 import javafx.application.Platform;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpEntity;
@@ -13,23 +13,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class SendMessageRestService {
     private static final String DEFAULT_CHAT_ID = "CH-18855369-805a-4412-acf3-18eb0104dc54";
     private static final String DEFAULT_USER_ID = "US-1f5e770b-1dab-4f5a-bc66-a36b06c67600";
     private static final int REFRESH_BATCH_SIZE = 3;
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
     private final RestTemplate restTemplate;
     private final TaskExecutor taskExecutor;
     private final MessengerServerRestProperty messengerServerRestProperty;
 
     private final AtomicBoolean refreshInProgress = new AtomicBoolean(false);
     private final AtomicReference<String> lastKnownId = new AtomicReference<>(null);
+
+    public SendMessageRestService(RestTemplate restTemplate, TaskExecutor threadPoolTaskExecutor, MessengerServerRestProperty messengerServerRestProperty) {
+        this.restTemplate = restTemplate;
+        this.taskExecutor = threadPoolTaskExecutor;
+        this.messengerServerRestProperty = messengerServerRestProperty;
+    }
 
     public void sendMessage(String message) {
         taskExecutor.execute(() -> sendRequest(
@@ -49,7 +59,16 @@ public class SendMessageRestService {
                 }
 
                 String newLastKnownId = textMessages.getLast().id();
-                List<String> texts = textMessages.stream().map(TextMessage::textData).toList();
+                List<MessageModel> texts = textMessages.stream().map(
+                        textMessage -> {
+                            LocalTime lt = LocalTime.ofInstant(Instant.ofEpochMilli(textMessage.timeDate()), ZoneId.systemDefault());
+                            return new MessageModel(
+                                    textMessage.userId().substring(30), // todo change it in future
+                                    textMessage.textData(),
+                                    lt.format(TIME_FORMATTER)
+                            );
+                        }
+                ).toList();
 
                 Platform.runLater(() -> {
                     pullMessagesCallback.addMessages(texts);
@@ -80,8 +99,4 @@ public class SendMessageRestService {
         }
         return textMessages;
     }
-
-    // todo
-    //  - Chat and user id to property
-    //  - User id to property
 }

@@ -1,6 +1,5 @@
 package com.earuile.bubble;
 
-import com.earuile.bubble.ui.JavaFxApplication;
 import javafx.application.Application;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.spring.SpringFxWeaver;
