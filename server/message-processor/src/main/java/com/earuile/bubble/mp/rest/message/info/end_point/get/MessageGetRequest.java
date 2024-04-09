@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.rest.message.info.get;
+package com.earuile.bubble.mp.rest.message.info.end_point.get;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

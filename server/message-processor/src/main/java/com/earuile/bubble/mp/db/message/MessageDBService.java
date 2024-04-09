@@ -1,10 +1,10 @@
 package com.earuile.bubble.mp.db.message;
 
-import com.earuile.bubble.mp.core.service.message.exceptions.ChatNotFound;
-import com.earuile.bubble.mp.core.service.message.exceptions.UserNotFound;
 import com.earuile.bubble.mp.db.chat.ChatDBService;
 import com.earuile.bubble.mp.db.chat.entity.ChatEntity;
 import com.earuile.bubble.mp.db.content.text.TextDBService;
+import com.earuile.bubble.mp.db.exception.ChatNotFound;
+import com.earuile.bubble.mp.db.exception.UserNotFound;
 import com.earuile.bubble.mp.db.message.entity.ContentType;
 import com.earuile.bubble.mp.db.message.entity.MessageEntity;
 import com.earuile.bubble.mp.db.user.UserDBService;
@@ -12,7 +12,6 @@ import com.earuile.bubble.mp.public_interface.message.text.dto.MessageGetRequest
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class MessageDBService {
                         .limit(dto.limit())
                         .filter(message -> dto.userId() == null || message.getUser().getId().equals(dto.userId()))
                         .toList())
-                .orElse(Collections.emptyList());
+                .orElseThrow(() -> new ChatNotFound("Chat with transmitted chatId wasn't found."));
     }
 
     /**

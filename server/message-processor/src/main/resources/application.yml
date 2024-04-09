@@ -5,6 +5,10 @@ spring:
     url: jdbc:postgresql://localhost:5430/message_processor
     username: postgres_mp
     password: postgres_mp
+  profiles:
+    active: constants
+  application:
+    name: MessageProcessorServer
 
 grpc:
   server:

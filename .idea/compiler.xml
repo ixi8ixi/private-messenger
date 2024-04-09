@@ -12,6 +12,5 @@
         <module name="server.message-processor.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="21" />
   </component>
 </project>

@@ -5,11 +5,12 @@ import com.earuile.bubble.mp.db.message.MessageDBService;
 import com.earuile.bubble.mp.db.message.entity.ContentType;
 import com.earuile.bubble.mp.db.message.entity.MessageEntity;
 import com.earuile.bubble.mp.public_interface.message.MessageDto;
-import com.earuile.bubble.mp.public_interface.message.text.content.Text;
+import com.earuile.bubble.mp.public_interface.message.text.content.TextDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.MessageGetRequestDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.MessageGetResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class MessageService {
      *
      * @return responseDto.
      */
+    @Transactional
     public MessageGetResponseDto get(MessageGetRequestDto requestDto) {
         return MessageGetResponseDto.builder()
                 .messages(messageDBService.getTextMessages(requestDto)
@@ -47,16 +49,16 @@ public class MessageService {
      *
      * @return text value if {@code contentType is TEXT} else link on content in string.
      */
-    private Text getContent(MessageEntity messageEntity) {
+    private TextDto getContent(MessageEntity messageEntity) {
         if (messageEntity.getContentType() == ContentType.TEXT) {
             return textDBService
                     .getTextById(messageEntity.getContent())
-                    .map(text -> Text.builder()
+                    .map(text -> TextDto.builder()
                             .text(text.getText())
                             .build())
                     .orElseThrow();
         } else {
-            return Text.builder()
+            return TextDto.builder()
                     .text(Long.toString(messageEntity.getContent()))
                     .build();
         }

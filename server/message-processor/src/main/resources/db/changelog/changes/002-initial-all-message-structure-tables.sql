@@ -1,13 +1,17 @@
 CREATE TABLE mp_user
 (
     id       VARCHAR(39)  NOT NULL PRIMARY KEY DEFAULT concat('US-'::varchar, gen_random_uuid()::varchar),
-    password VARCHAR(256) NOT NULL
+    login    VARCHAR(20)  NOT NULL UNIQUE,
+    password VARCHAR(256) NOT NULL,
+    name     VARCHAR(20)  NOT NULL,
+    time     TIMESTAMP    NOT NULL
 );
 
 CREATE TABLE mp_chat
 (
     id   VARCHAR(39)  NOT NULL PRIMARY KEY DEFAULT concat('CH-'::varchar, gen_random_uuid()::varchar),
-    name VARCHAR(256) NOT NULL
+    name VARCHAR(50) NOT NULL,
+    time TIMESTAMP    NOT NULL
 );
 
 CREATE TABLE mp_user_to_chat

@@ -1,0 +1,14 @@
+rest:
+  chat:
+    validation:
+      id-prefix: "CH-"
+      max-length-name: 50
+  message:
+    validation:
+      id-prefix: "MES-"
+  user:
+    validation:
+      id-prefix: "US-"
+      max-length-login: 20
+      max-length-password: 256
+      max-length-name: 20

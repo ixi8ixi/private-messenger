@@ -3,8 +3,8 @@ package com.earuile.bubble.mp.rest.message;
 import com.earuile.bubble.mp.core.service.message.MessageService;
 import com.earuile.bubble.mp.core.service.message.text.TextMessageService;
 import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendResponse;
-import com.earuile.bubble.mp.rest.message.info.get.MessageGetRequest;
-import com.earuile.bubble.mp.rest.message.info.get.MessageGetResponse;
+import com.earuile.bubble.mp.rest.message.info.end_point.get.MessageGetRequest;
+import com.earuile.bubble.mp.rest.message.info.end_point.get.MessageGetResponse;
 import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,7 +36,9 @@ public class MessageController {
                                     description = "Server system information"))}),
             @ApiResponse(responseCode = "400", description = "Invalid request format",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Bad argument's value",
+            @ApiResponse(responseCode = "404", description = "Chat not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId)",
                     content = @Content)
     })
     @PostMapping("/ch1")
@@ -55,10 +57,12 @@ public class MessageController {
                             schema = @Schema(implementation = TextMessageSendResponse.class,
                                     description = "Encoded messages"))}),
             @ApiResponse(responseCode = "400", description = "Invalid request format",
+                    content = @Content),
+            @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId or userId)",
                     content = @Content)
     })
     @GetMapping("/ch1")
-    public MessageGetResponse getMessage(@RequestBody MessageGetRequest request) {
+    public MessageGetResponse getMessages(@RequestBody MessageGetRequest request) {
         return mapper.mapDtoToResponse(
                 messageService.get(
                         mapper.mapRequestToDto(request)
