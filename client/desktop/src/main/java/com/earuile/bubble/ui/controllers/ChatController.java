@@ -2,13 +2,17 @@ package com.earuile.bubble.ui.controllers;
 
 import com.earuile.bubble.rest.SendMessageRestService;
 import com.earuile.bubble.public_interface.MessageModelDto;
+import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.message.MessageController;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +25,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RequiredArgsConstructor
 public class ChatController {
     private final SendMessageRestService sendMessageRestService;
+    private final StageRepository stageRepository;
+    private final AtomicBoolean displayed = new AtomicBoolean(false);
+
+    @FXML
+    private AnchorPane backview;
 
     @FXML
     private JFXListView<MessageModelDto> messagesArea;
@@ -39,6 +48,9 @@ public class ChatController {
 
     @FXML
     public void initialize() {
+        Scene scene = stageRepository.getStage().getScene();
+        scene.getStylesheets().add("com/earuile/bubble/ui/controllers/chat-style.css");
+
         messagesArea.setItems(list);
         messagesArea.setCellFactory(p -> new MessageController());
         messagesArea.setEditable(false);
@@ -56,8 +68,17 @@ public class ChatController {
         sendMessageRestService.pullMessages(pullMessagesCallback);
     }
 
+    // todo move to service
     @Scheduled(fixedDelay = 200)
-    public void refresh() {
-        sendMessageRestService.pullMessages(pullMessagesCallback);
+    private void refresh() {
+        if (displayed.get()) {
+            sendMessageRestService.pullMessages(pullMessagesCallback);
+        }
+    }
+
+    public void show() {
+        Stage stage = stageRepository.getStage();
+        displayed.set(true);
+        stage.getScene().setRoot(backview);
     }
 }

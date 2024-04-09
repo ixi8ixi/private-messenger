@@ -33,20 +33,20 @@ public class StartController {
         StartLoaderCallback callback = new StartLoaderCallback() {
             @Override
             public void toRegistration() {
-                fxWeaver.loadController(AuthController.class).show();
+                Platform.runLater(() -> fxWeaver.loadController(AuthController.class).show());
             }
 
             @Override
             public void toChats() {
-                System.out.println("To chats!");
+                Platform.runLater(() -> fxWeaver.loadController(ChatController.class).show());
             }
         };
 
         threadPoolTaskExecutor.execute(() -> {
             if (userInfoService.loadInfo()) {
-                Platform.runLater(callback::toChats);
+                callback.toChats();
             } else {
-                Platform.runLater(callback::toRegistration);
+                callback.toRegistration();
             }
         });
     }

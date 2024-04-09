@@ -1,5 +1,6 @@
 package com.earuile.bubble.rest;
 
+import com.earuile.bubble.db.info.UserInfoService;
 import com.earuile.bubble.rest.config.MessengerServerRestProperty;
 import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.rest.dto.*;
@@ -25,9 +26,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service
 public class SendMessageRestService {
     private static final String DEFAULT_CHAT_ID = "CH-18855369-805a-4412-acf3-18eb0104dc54";
-    private static final String DEFAULT_USER_ID = "US-1f5e770b-1dab-4f5a-bc66-a36b06c67600";
     private static final int REFRESH_BATCH_SIZE = 3;
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    private final UserInfoService userInfoService;
     private final RestTemplate restTemplate;
     private final TaskExecutor threadPoolTaskExecutor;
     private final MessengerServerRestProperty messengerServerRestProperty;
@@ -35,15 +36,17 @@ public class SendMessageRestService {
     private final AtomicBoolean refreshInProgress = new AtomicBoolean(false);
     private final AtomicReference<String> lastKnownId = new AtomicReference<>(null);
 
-    public SendMessageRestService(RestTemplate restTemplate, TaskExecutor threadPoolTaskExecutor, MessengerServerRestProperty messengerServerRestProperty) {
+    public SendMessageRestService(RestTemplate restTemplate, TaskExecutor threadPoolTaskExecutor,
+                                  MessengerServerRestProperty messengerServerRestProperty, UserInfoService userInfoService) {
         this.restTemplate = restTemplate;
         this.threadPoolTaskExecutor = threadPoolTaskExecutor;
         this.messengerServerRestProperty = messengerServerRestProperty;
+        this.userInfoService = userInfoService;
     }
 
     public void sendMessage(String message) {
         threadPoolTaskExecutor.execute(() -> sendRequest(
-                new MessageRequest(DEFAULT_CHAT_ID, new TextMessage(DEFAULT_USER_ID, message, null, null)),
+                new MessageRequest(DEFAULT_CHAT_ID, new TextMessage(userInfoService.id(), message, null, null)),
                 HttpMethod.POST, MessageResponse.class));
     }
 
@@ -64,7 +67,7 @@ public class SendMessageRestService {
                             LocalTime lt = LocalTime.ofInstant(Instant.ofEpochMilli(textMessage.timeDate()), ZoneId.systemDefault());
                             return new MessageModelDto(
                                     textMessage.userId().substring(30), // todo change it in future
-                                    textMessage.textData(),
+                                    textMessage.textData().substring(0, textMessage.textData().length() - 8), // todo temporary
                                     lt.format(TIME_FORMATTER)
                             );
                         }

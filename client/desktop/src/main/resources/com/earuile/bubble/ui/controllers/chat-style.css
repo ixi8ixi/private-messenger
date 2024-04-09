@@ -24,7 +24,3 @@
     -fx-scale-x: 0.3;
     -fx-background-color:  #8C8C8C;
 }
-
-#errorMessage {
-    -fx-text-fill: #D41340;
-}

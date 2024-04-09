@@ -10,3 +10,7 @@
     -fx-background-color:  #8C8C8C;
     -fx-text-fill: #FFFFFF;
 }
+
+#errorMessage {
+    -fx-text-fill: #D41340;
+}

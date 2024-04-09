@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 public class AuthController {
     private final UserRegistrationRestService userRegistrationRestService;
     private final StageRepository stageRepository;
+    private final FxWeaver fxWeaver;
 
     @FXML
     VBox registrationPane;
@@ -46,12 +48,12 @@ public class AuthController {
         RegistrationReadyCallback callback = new RegistrationReadyCallback() {
             @Override
             public void enter() {
-                Platform.runLater(() -> errorMessage.setText("Registered!"));
+                Platform.runLater(() -> fxWeaver.loadController(ChatController.class).show());
             }
 
             @Override
             public void error(String text) {
-//                errorMessage.setText(text);
+                Platform.runLater(() -> errorMessage.setText(text));
             }
         };
 
