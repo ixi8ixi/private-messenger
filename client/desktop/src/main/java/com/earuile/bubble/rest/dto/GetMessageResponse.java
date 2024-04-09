@@ -1,4 +1,4 @@
-package com.earuile.bubble.rest.dto.rest;
+package com.earuile.bubble.rest.dto;
 
 import java.util.List;
 

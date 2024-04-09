@@ -1,6 +1,6 @@
 package com.earuile.bubble.ui.controllers.message;
 
-import com.earuile.bubble.rest.dto.model.MessageModel;
+import com.earuile.bubble.public_interface.MessageModelDto;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class MessageController extends JFXListCell<MessageModel> {
+public class MessageController extends JFXListCell<MessageModelDto> {
     @FXML
     public AnchorPane anPane;
 
@@ -30,7 +30,7 @@ public class MessageController extends JFXListCell<MessageModel> {
     }
 
     @Override
-    protected void updateItem(MessageModel item, boolean empty) {
+    protected void updateItem(MessageModelDto item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
             setText(null);

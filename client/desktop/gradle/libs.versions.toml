@@ -30,6 +30,7 @@ lombok = { module = "org.projectlombok:lombok", version = "1.18.30" }
 
 #DB
 postgresql-driver = { module = "org.postgresql:postgresql", version = "42.6.0" }
+h2-driver = { module = "com.h2database:h2", version = "2.2.224" }
 liquibase-driver = { module = "org.liquibase:liquibase-core", version = "4.24.0" }
 
 #Grpc (net + io)

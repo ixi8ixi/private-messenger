@@ -10,10 +10,10 @@ public class RestTaskExecutorConfig {
     @Bean
     public TaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(1);
-        executor.setMaxPoolSize(1);
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(10);
         executor.setThreadNamePrefix("send_message_executor_thread");
         executor.initialize();
-        return executor;
+        return executor; // todo Какая-то херня
     }
 }

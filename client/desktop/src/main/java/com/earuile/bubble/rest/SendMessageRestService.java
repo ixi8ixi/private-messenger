@@ -1,8 +1,8 @@
 package com.earuile.bubble.rest;
 
 import com.earuile.bubble.rest.config.MessengerServerRestProperty;
-import com.earuile.bubble.rest.dto.model.MessageModel;
-import com.earuile.bubble.rest.dto.rest.*;
+import com.earuile.bubble.public_interface.MessageModelDto;
+import com.earuile.bubble.rest.dto.*;
 import com.earuile.bubble.ui.controllers.PullMessagesCallback;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class SendMessageRestService {
     private static final int REFRESH_BATCH_SIZE = 3;
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
     private final RestTemplate restTemplate;
-    private final TaskExecutor taskExecutor;
+    private final TaskExecutor threadPoolTaskExecutor;
     private final MessengerServerRestProperty messengerServerRestProperty;
 
     private final AtomicBoolean refreshInProgress = new AtomicBoolean(false);
@@ -37,19 +37,19 @@ public class SendMessageRestService {
 
     public SendMessageRestService(RestTemplate restTemplate, TaskExecutor threadPoolTaskExecutor, MessengerServerRestProperty messengerServerRestProperty) {
         this.restTemplate = restTemplate;
-        this.taskExecutor = threadPoolTaskExecutor;
+        this.threadPoolTaskExecutor = threadPoolTaskExecutor;
         this.messengerServerRestProperty = messengerServerRestProperty;
     }
 
     public void sendMessage(String message) {
-        taskExecutor.execute(() -> sendRequest(
+        threadPoolTaskExecutor.execute(() -> sendRequest(
                 new MessageRequest(DEFAULT_CHAT_ID, new TextMessage(DEFAULT_USER_ID, message, null, null)),
                 HttpMethod.POST, MessageResponse.class));
     }
 
     public void pullMessages(PullMessagesCallback pullMessagesCallback) {
         if (refreshInProgress.compareAndSet(false, true)) {
-            taskExecutor.execute(() -> {
+            threadPoolTaskExecutor.execute(() -> {
                 GetMessageRequest request = new GetMessageRequest(null, DEFAULT_CHAT_ID, REFRESH_BATCH_SIZE, lastKnownId.get());
                 ResponseEntity<GetMessageResponse> response = sendRequest(request, HttpMethod.GET, GetMessageResponse.class);
 
@@ -59,10 +59,10 @@ public class SendMessageRestService {
                 }
 
                 String newLastKnownId = textMessages.getLast().id();
-                List<MessageModel> texts = textMessages.stream().map(
+                List<MessageModelDto> texts = textMessages.stream().map(
                         textMessage -> {
                             LocalTime lt = LocalTime.ofInstant(Instant.ofEpochMilli(textMessage.timeDate()), ZoneId.systemDefault());
-                            return new MessageModel(
+                            return new MessageModelDto(
                                     textMessage.userId().substring(30), // todo change it in future
                                     textMessage.textData(),
                                     lt.format(TIME_FORMATTER)

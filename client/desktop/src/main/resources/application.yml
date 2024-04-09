@@ -1,3 +1,17 @@
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  datasource:
+    url: jdbc:h2:file:/bubble/cache
+    username: localdb
+    password: localdb
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
 server:
   message:
     uri: "http://192.168.31.54:8082/mp/message/ch1"
+  registration:
+    uri: "http://192.168.31.54:8082/mp/user/registration"

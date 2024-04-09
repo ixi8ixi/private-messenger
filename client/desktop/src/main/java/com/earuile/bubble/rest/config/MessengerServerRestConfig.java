@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableScheduling
-@EnableConfigurationProperties({ MessengerServerRestProperty.class })
+@EnableConfigurationProperties({ MessengerServerRestProperty.class, MessengerServerRegistrationProperty.class })
 public class MessengerServerRestConfig {
     @Bean
     public RestTemplate restTemplate() {

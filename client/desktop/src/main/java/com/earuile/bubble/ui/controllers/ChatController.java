@@ -1,7 +1,7 @@
 package com.earuile.bubble.ui.controllers;
 
 import com.earuile.bubble.rest.SendMessageRestService;
-import com.earuile.bubble.rest.dto.model.MessageModel;
+import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.ui.controllers.message.MessageController;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
@@ -23,8 +23,8 @@ public class ChatController {
     private final SendMessageRestService sendMessageRestService;
 
     @FXML
-    private JFXListView<MessageModel> messagesArea;
-    ObservableList<MessageModel> list = FXCollections.observableArrayList();
+    private JFXListView<MessageModelDto> messagesArea;
+    ObservableList<MessageModelDto> list = FXCollections.observableArrayList();
     private AtomicBoolean atBottom = new AtomicBoolean(false);
 
     @FXML

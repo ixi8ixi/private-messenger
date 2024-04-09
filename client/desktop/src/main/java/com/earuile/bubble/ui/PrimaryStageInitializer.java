@@ -1,5 +1,6 @@
 package com.earuile.bubble.ui;
 
+import com.earuile.bubble.ui.controllers.AuthController;
 import com.earuile.bubble.ui.controllers.ChatController;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -33,7 +34,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Image image = new Image(iconStream);
         primaryStage.getIcons().add(image);
 
-        Scene scene = new Scene(fxWeaver.loadView(ChatController.class), 520, 600);
+        Scene scene = new Scene(fxWeaver.loadView(AuthController.class), 520, 600);
         scene.getStylesheets().add("/com/earuile/bubble/ui/controllers/chat-style.css");
         primaryStage.setScene(scene);
 
