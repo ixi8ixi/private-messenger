@@ -48,7 +48,6 @@ public class MessageController extends JFXListCell<MessageModel> {
                 } catch (IOException e) {
                     throw new RuntimeException(e); // fixme !
                 }
-
             }
 
             username.setText(item.username());

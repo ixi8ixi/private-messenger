@@ -50,7 +50,7 @@ public class SendMessageRestService {
     public void pullMessages(PullMessagesCallback pullMessagesCallback) {
         if (refreshInProgress.compareAndSet(false, true)) {
             taskExecutor.execute(() -> {
-                GetMessageRequest request = new GetMessageRequest(DEFAULT_USER_ID, DEFAULT_CHAT_ID, REFRESH_BATCH_SIZE, lastKnownId.get());
+                GetMessageRequest request = new GetMessageRequest(null, DEFAULT_CHAT_ID, REFRESH_BATCH_SIZE, lastKnownId.get());
                 ResponseEntity<GetMessageResponse> response = sendRequest(request, HttpMethod.GET, GetMessageResponse.class);
 
                 List<TextMessage> textMessages = checkRefreshList(response);
