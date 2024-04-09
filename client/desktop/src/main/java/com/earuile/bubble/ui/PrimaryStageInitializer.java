@@ -2,9 +2,11 @@ package com.earuile.bubble.ui;
 
 import com.earuile.bubble.ui.controllers.AuthController;
 import com.earuile.bubble.ui.controllers.ChatController;
+import com.earuile.bubble.ui.controllers.StartController;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -13,14 +15,11 @@ import org.springframework.stereotype.Component;
 import java.io.InputStream;
 
 @Component
+@RequiredArgsConstructor
 public class PrimaryStageInitializer implements ApplicationListener<StageReadyEvent> {
 
+    private final StageRepository stageRepository;
     private final FxWeaver fxWeaver;
-
-    @Autowired
-    public PrimaryStageInitializer(FxWeaver fxWeaver) {
-        this.fxWeaver = fxWeaver;
-    }
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
@@ -34,10 +33,11 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Image image = new Image(iconStream);
         primaryStage.getIcons().add(image);
 
-        Scene scene = new Scene(fxWeaver.loadView(AuthController.class), 520, 600);
-        scene.getStylesheets().add("/com/earuile/bubble/ui/controllers/chat-style.css");
+        Scene scene = new Scene(fxWeaver.loadView(StartController.class), 520, 600);
+        scene.getStylesheets().add("/com/earuile/bubble/ui/controllers/start-style.css");
         primaryStage.setScene(scene);
 
+        stageRepository.setStage(primaryStage);
         primaryStage.show();
     }
 }

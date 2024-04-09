@@ -2,7 +2,6 @@ package com.earuile.bubble.db.info;
 
 import com.earuile.bubble.db.info.entity.UserInfoEntity;
 import com.earuile.bubble.public_interface.UserInfoDto;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +13,13 @@ public class UserInfoService {
     private final UserInfoRepository userInfoRepository;
     private UserInfoEntity userInfo;
 
-    @PostConstruct
-    private void loadInfo() {
+    public boolean loadInfo() {
         List<UserInfoEntity> infoList = userInfoRepository.findAll();
         if (!infoList.isEmpty()) {
             userInfo = infoList.getFirst();
+            return true;
         }
+        return false;
     }
 
     public void updateInfo(UserInfoDto infoDto) {
@@ -30,6 +30,11 @@ public class UserInfoService {
                 .password(infoDto.password())
                 .build();
         userInfoRepository.save(entity);
+        userInfo = entity;
+    }
+
+    public boolean isPresent() {
+        return userInfo == null;
     }
 
     public String id() {

@@ -25,19 +25,6 @@
     -fx-background-color:  #8C8C8C;
 }
 
-#registrationPane {
-    -fx-background-color:  #333333;
-}
-
-#enterTextLabel {
-    -fx-text-fill: #FFFFFF;
-}
-
-#loginField, #nameField, #passwordField {
-    -fx-background-color:  #8C8C8C;
-    -fx-text-fill: #FFFFFF;
-}
-
 #errorMessage {
     -fx-text-fill: #D41340;
 }

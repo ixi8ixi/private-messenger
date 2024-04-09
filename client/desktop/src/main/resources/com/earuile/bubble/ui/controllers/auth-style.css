@@ -1,8 +1,12 @@
-.vbox {
+#registrationPane {
     -fx-background-color:  #333333;
 }
 
-#messagesArea {
+#enterTextLabel {
+    -fx-text-fill: #FFFFFF;
+}
+
+#loginField, #nameField, #passwordField {
     -fx-background-color:  #8C8C8C;
     -fx-text-fill: #FFFFFF;
 }

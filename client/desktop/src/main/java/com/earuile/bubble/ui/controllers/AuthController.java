@@ -2,12 +2,16 @@ package com.earuile.bubble.ui.controllers;
 
 import com.earuile.bubble.rest.UserRegistrationRestService;
 import com.earuile.bubble.public_interface.RegisterFormDto;
+import com.earuile.bubble.ui.StageRepository;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -17,6 +21,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserRegistrationRestService userRegistrationRestService;
+    private final StageRepository stageRepository;
+
+    @FXML
+    VBox registrationPane;
 
     @FXML
     TextField loginField;
@@ -32,6 +40,9 @@ public class AuthController {
 
     @FXML
     void initialize() {
+        Scene scene = stageRepository.getStage().getScene();
+        scene.getStylesheets().add("com/earuile/bubble/ui/controllers/auth-style.css");
+
         RegistrationReadyCallback callback = new RegistrationReadyCallback() {
             @Override
             public void enter() {
@@ -68,5 +79,10 @@ public class AuthController {
                 );
             }
         });
+    }
+
+    public void show() {
+        Stage stage = stageRepository.getStage();
+        stage.getScene().setRoot(registrationPane);
     }
 }
