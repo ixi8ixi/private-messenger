@@ -1,15 +1,15 @@
 package com.earuile.bubble.mp.rest.user;
 
-import com.earuile.bubble.mp.public_interface.user.chat.UserGetChatsRequestDto;
-import com.earuile.bubble.mp.public_interface.user.chat.UserGetChatsResponseDto;
-import com.earuile.bubble.mp.public_interface.user.registration.UserRegistrationRequestDto;
-import com.earuile.bubble.mp.public_interface.user.registration.UserRegistrationResponseDto;
+import com.earuile.bubble.mp.public_interface.user.chat.dto.UserGetChatsRequestDto;
+import com.earuile.bubble.mp.public_interface.user.chat.dto.UserGetChatsResponseDto;
+import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistrationRequestDto;
+import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistrationResponseDto;
 import com.earuile.bubble.mp.rest.ValidationService;
 import com.earuile.bubble.mp.rest.user.info.content.ChatInfo;
 import com.earuile.bubble.mp.rest.user.info.end_point.chat.UserGetChatsRequest;
 import com.earuile.bubble.mp.rest.user.info.end_point.chat.UserGetChatsResponse;
-import com.earuile.bubble.mp.rest.user.registration.info.end_point.register.UserRegistrationRequest;
-import com.earuile.bubble.mp.rest.user.registration.info.end_point.register.UserRegistrationResponse;
+import com.earuile.bubble.mp.rest.user.info.end_point.register.UserRegistrationRequest;
+import com.earuile.bubble.mp.rest.user.info.end_point.register.UserRegistrationResponse;
 import com.earuile.bubble.mp.rest.user.validation.UserValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -50,7 +50,7 @@ public class UserMapper {
     }
 
     public UserGetChatsRequestDto mapRequestToDto(UserGetChatsRequest request) {
-        validationService.validateCorrectPrefixAndUUIDSuffix(userValidation.idPrefix, request.userId());
+        validationService.validateUserId(request.userId());
 
         return UserGetChatsRequestDto.builder()
                 .userId(request.userId())

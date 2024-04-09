@@ -1,6 +1,6 @@
 package com.earuile.bubble.mp.public_interface.message.text.dto;
 
-import com.earuile.bubble.mp.public_interface.message.MessageDto;
+import com.earuile.bubble.mp.public_interface.message.content.MessageDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

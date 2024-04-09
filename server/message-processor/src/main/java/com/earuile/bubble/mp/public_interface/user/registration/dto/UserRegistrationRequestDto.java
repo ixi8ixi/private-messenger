@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.public_interface.user.registration;
+package com.earuile.bubble.mp.public_interface.user.registration.dto;
 
 import lombok.Builder;
 

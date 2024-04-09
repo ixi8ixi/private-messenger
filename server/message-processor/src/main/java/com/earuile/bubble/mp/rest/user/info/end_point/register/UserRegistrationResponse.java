@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.rest.user.registration.info.end_point.register;
+package com.earuile.bubble.mp.rest.user.info.end_point.register;
 
 import lombok.Builder;
 

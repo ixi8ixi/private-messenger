@@ -2,7 +2,7 @@ package com.earuile.bubble.mp.core.service.message.text;
 
 import com.earuile.bubble.mp.db.message.MessageDBService;
 import com.earuile.bubble.mp.db.message.entity.MessageEntity;
-import com.earuile.bubble.mp.public_interface.message.MessageDto;
+import com.earuile.bubble.mp.public_interface.message.content.MessageDto;
 import com.earuile.bubble.mp.public_interface.message.text.content.TextDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendRequestDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendResponseDto;

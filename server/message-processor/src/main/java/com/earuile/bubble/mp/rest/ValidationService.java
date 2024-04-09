@@ -2,6 +2,7 @@ package com.earuile.bubble.mp.rest;
 
 import com.earuile.bubble.mp.rest.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -9,6 +10,18 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ValidationService {
+    @Value("${rest.user.validation.id-prefix}")
+    private String userIdPrefix;
+    @Value("${rest.chat.validation.id-prefix}")
+    private String chatIdPrefix;
+
+    public void validateUserId(String id) {
+        validateCorrectPrefixAndUUIDSuffix(userIdPrefix, id);
+    }
+
+    public void validateChatId(String id) {
+        validateCorrectPrefixAndUUIDSuffix(chatIdPrefix, id);
+    }
 
     public void validateCorrectPrefixAndUUIDSuffix(String prefix, String str) {
         validateCorrectPrefix(prefix, str);

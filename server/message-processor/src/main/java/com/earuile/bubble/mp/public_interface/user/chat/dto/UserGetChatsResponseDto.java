@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.public_interface.user.chat;
+package com.earuile.bubble.mp.public_interface.user.chat.dto;
 
 import com.earuile.bubble.mp.public_interface.user.chat.content.ChatInfoDto;
 import lombok.Builder;

@@ -1,19 +1,18 @@
 package com.earuile.bubble.mp.rest.message;
 
-import com.earuile.bubble.mp.public_interface.message.MessageDto;
+import com.earuile.bubble.mp.public_interface.message.content.MessageDto;
 import com.earuile.bubble.mp.public_interface.message.text.content.TextDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.MessageGetRequestDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.MessageGetResponseDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendRequestDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendResponseDto;
 import com.earuile.bubble.mp.rest.ValidationService;
-import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendResponse;
-import com.earuile.bubble.mp.rest.message.text.info.content.TextMessage;
 import com.earuile.bubble.mp.rest.message.info.end_point.get.MessageGetRequest;
 import com.earuile.bubble.mp.rest.message.info.end_point.get.MessageGetResponse;
+import com.earuile.bubble.mp.rest.message.text.info.content.TextMessage;
 import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendRequest;
+import com.earuile.bubble.mp.rest.message.text.info.end_point.send.TextMessageSendResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneOffset;
@@ -23,13 +22,8 @@ import java.time.ZoneOffset;
 public class MessageMapper {
     private final ValidationService validationService;
 
-    @Value("${rest.user.validation.id-prefix}")
-    private String userIdPrefix;
-    @Value("${rest.chat.validation.id-prefix}")
-    private String chatIdPrefix;
-
     public TextSendRequestDto mapRequestToDto(TextMessageSendRequest request) {
-        validationService.validateCorrectPrefixAndUUIDSuffix(chatIdPrefix, request.chatId());
+        validationService.validateChatId(request.chatId());
 
         return TextSendRequestDto.builder()
                 .userId(request.textMessage().userId())
@@ -39,9 +33,9 @@ public class MessageMapper {
     }
 
     public MessageGetRequestDto mapRequestToDto(MessageGetRequest request) {
-        validationService.validateCorrectPrefixAndUUIDSuffix(chatIdPrefix, request.chatId());
+        validationService.validateChatId(request.chatId());
         if (request.userId() != null) {
-            validationService.validateCorrectPrefixAndUUIDSuffix(userIdPrefix, request.userId());
+            validationService.validateUserId(request.userId());
         }
 
         return MessageGetRequestDto.builder()
