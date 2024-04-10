@@ -7,7 +7,7 @@ import com.earuile.bubble.mp.db.user.UserDBService;
 import com.earuile.bubble.mp.db.user.entity.UserEntity;
 import com.earuile.bubble.mp.public_interface.user.chat.dto.UserGetChatsRequestDto;
 import com.earuile.bubble.mp.public_interface.user.chat.dto.UserGetChatsResponseDto;
-import com.earuile.bubble.mp.public_interface.user.chat.content.ChatInfoDto;
+import com.earuile.bubble.mp.public_interface.content.ChatInfoDto;
 import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistrationRequestDto;
 import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistrationResponseDto;
 import lombok.RequiredArgsConstructor;

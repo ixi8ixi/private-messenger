@@ -8,7 +8,7 @@ import com.earuile.bubble.mp.db.exception.UserNotFound;
 import com.earuile.bubble.mp.db.message.entity.ContentType;
 import com.earuile.bubble.mp.db.message.entity.MessageEntity;
 import com.earuile.bubble.mp.db.user.UserDBService;
-import com.earuile.bubble.mp.public_interface.message.text.dto.MessageGetRequestDto;
+import com.earuile.bubble.mp.public_interface.message.dto.MessageGetRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
