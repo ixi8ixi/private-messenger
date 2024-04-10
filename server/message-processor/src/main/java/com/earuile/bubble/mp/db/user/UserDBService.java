@@ -19,4 +19,8 @@ public class UserDBService {
         return repository.findById(id);
     }
 
+    public Optional<UserEntity> getByLogin(String login) {
+        return repository.findFirstByLogin(login);
+    }
+
 }

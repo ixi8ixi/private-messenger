@@ -1,6 +1,6 @@
-package com.earuile.bubble.mp.db.content.text;
+package com.earuile.bubble.mp.db.message.text;
 
-import com.earuile.bubble.mp.db.content.text.entity.TextEntity;
+import com.earuile.bubble.mp.db.message.text.entity.TextEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

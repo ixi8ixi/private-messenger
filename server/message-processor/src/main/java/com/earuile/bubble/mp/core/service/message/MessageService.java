@@ -1,6 +1,6 @@
 package com.earuile.bubble.mp.core.service.message;
 
-import com.earuile.bubble.mp.db.content.text.TextDBService;
+import com.earuile.bubble.mp.db.message.text.TextDBService;
 import com.earuile.bubble.mp.db.message.MessageDBService;
 import com.earuile.bubble.mp.db.message.entity.ContentType;
 import com.earuile.bubble.mp.db.message.entity.MessageEntity;

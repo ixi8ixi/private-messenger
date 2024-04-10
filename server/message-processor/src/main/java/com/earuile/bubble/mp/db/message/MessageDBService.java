@@ -2,7 +2,7 @@ package com.earuile.bubble.mp.db.message;
 
 import com.earuile.bubble.mp.db.chat.ChatDBService;
 import com.earuile.bubble.mp.db.chat.entity.ChatEntity;
-import com.earuile.bubble.mp.db.content.text.TextDBService;
+import com.earuile.bubble.mp.db.message.text.TextDBService;
 import com.earuile.bubble.mp.db.exception.ChatNotFound;
 import com.earuile.bubble.mp.db.exception.UserNotFound;
 import com.earuile.bubble.mp.db.message.entity.ContentType;

@@ -1,6 +1,6 @@
 package com.earuile.bubble.mp.public_interface.user.chat.dto;
 
-import com.earuile.bubble.mp.public_interface.content.ChatInfoDto;
+import com.earuile.bubble.mp.public_interface.content.dto.ChatInfoDto;
 import lombok.Builder;
 
 import java.util.List;

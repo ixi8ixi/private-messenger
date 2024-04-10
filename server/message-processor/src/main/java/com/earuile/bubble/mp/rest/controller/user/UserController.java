@@ -5,6 +5,8 @@ import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetCha
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsResponse;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationRequest;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationResponse;
+import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoRequest;
+import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -64,6 +66,28 @@ public class UserController {
     public UserGetChatsResponse getChats(@RequestBody UserGetChatsRequest request) {
         return mapper.mapDtoToResponse(
                 userService.getChats(
+                        mapper.mapRequestToDto(request)
+                )
+        );
+    }
+
+    @Operation(summary = "Get all info about user by id or login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Correct response",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GetUserInfoResponse.class,
+                                    description = "User info"))}),
+            @ApiResponse(responseCode = "400", description = "Invalid request format",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (id or login is bad) or both are nulls",
+                    content = @Content)
+    })
+    @PostMapping("/ch1")
+    public GetUserInfoResponse get(@RequestBody GetUserInfoRequest request) {
+        return mapper.mapDtoToResponse(
+                userService.get(
                         mapper.mapRequestToDto(request)
                 )
         );

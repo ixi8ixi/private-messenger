@@ -47,7 +47,7 @@ public class ChatController {
         );
     }
 
-    @Operation(summary = "Get all info about chat with such id")
+    @Operation(summary = "Get all info about chat by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Correct response",
                     content = {@Content(mediaType = "application/json",
@@ -60,7 +60,7 @@ public class ChatController {
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId)",
                     content = @Content)
     })
-    @PostMapping("/info")
+    @PostMapping("/ch1")
     public GetChatInfoResponse get(GetChatInfoRequest request) {
         return mapper.mapDtoToResponse(
                 chatService.get(

@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.public_interface.content;
+package com.earuile.bubble.mp.public_interface.content.dto;
 
 import lombok.Builder;
 

@@ -4,14 +4,18 @@ import com.earuile.bubble.mp.public_interface.user.chat.dto.UserGetChatsRequestD
 import com.earuile.bubble.mp.public_interface.user.chat.dto.UserGetChatsResponseDto;
 import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistrationRequestDto;
 import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistrationResponseDto;
+import com.earuile.bubble.mp.public_interface.user.user_info.GetUserInfoRequestDto;
+import com.earuile.bubble.mp.public_interface.user.user_info.GetUserInfoResponseDto;
+import com.earuile.bubble.mp.rest.content.ContentMapper;
 import com.earuile.bubble.mp.rest.controller.ValidationService;
-import com.earuile.bubble.mp.rest.content.ChatInfo;
-import com.earuile.bubble.mp.rest.content.UserInfo;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsRequest;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsResponse;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationRequest;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationResponse;
+import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoRequest;
+import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoResponse;
 import com.earuile.bubble.mp.rest.controller.user.validation.UserValidation;
+import com.earuile.bubble.mp.rest.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +26,7 @@ import java.time.ZoneOffset;
 public class UserMapper {
     private final ValidationService validationService;
     private final UserValidation userValidation;
+    private final ContentMapper contentMapper;
 
     public UserRegistrationRequestDto mapRequestToDto(UserRegistrationRequest request) {
         validationService.validateMaxInt(
@@ -58,6 +63,28 @@ public class UserMapper {
                 .build();
     }
 
+    public GetUserInfoRequestDto mapRequestToDto(GetUserInfoRequest request) {
+        if (request.userId() == null && request.login() == null) {
+            throw new ValidationException("Id or login must be not null");
+        }
+
+        if (request.userId() == null) {
+            validationService.validateMaxInt(
+                    userValidation.maxLengthLogin,
+                    request.login().length(),
+                    "Login is very long.",
+                    "length"
+            );
+        } else {
+            validationService.validateUserId(request.userId());
+        }
+
+        return GetUserInfoRequestDto.builder()
+                .userId(request.userId())
+                .login(request.login())
+                .build();
+    }
+
     public UserRegistrationResponse mapDtoToResponse(UserRegistrationResponseDto responseDto) {
         return UserRegistrationResponse.builder()
                 .userId(responseDto.userId())
@@ -69,20 +96,15 @@ public class UserMapper {
         return UserGetChatsResponse.builder()
                 .chats(responseDto.chats()
                         .stream()
-                        .map(chatInfoDto -> ChatInfo.builder()
-                                .id(chatInfoDto.id())
-                                .name(chatInfoDto.name())
-                                .users(chatInfoDto.users()
-                                        .stream()
-                                        .map(userInfoDto -> UserInfo.builder()
-                                                .id(userInfoDto.id())
-                                                .login(userInfoDto.login())
-                                                .name(userInfoDto.name())
-                                                .build())
-                                        .toList())
-                                .time(chatInfoDto.time().toEpochSecond(ZoneOffset.UTC))
-                                .build())
+                        .map(contentMapper::mapDtoToInfo)
                         .toList())
+                .time(System.currentTimeMillis())
+                .build();
+    }
+
+    public GetUserInfoResponse mapDtoToResponse(GetUserInfoResponseDto responseDto) {
+        return GetUserInfoResponse.builder()
+                .userInfo(contentMapper.mapDtoToInfo(responseDto.userInfo()))
                 .time(System.currentTimeMillis())
                 .build();
     }

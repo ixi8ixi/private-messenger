@@ -1,10 +1,10 @@
 package com.earuile.bubble.mp.rest.controller.chat;
 
-import com.earuile.bubble.mp.public_interface.chat.chat_info.GetChatInfoRequestDto;
-import com.earuile.bubble.mp.public_interface.chat.chat_info.GetChatInfoResponseDto;
+import com.earuile.bubble.mp.public_interface.chat.chat_info.dto.GetChatInfoRequestDto;
+import com.earuile.bubble.mp.public_interface.chat.chat_info.dto.GetChatInfoResponseDto;
 import com.earuile.bubble.mp.public_interface.chat.create.dto.CreateChatRequestDto;
 import com.earuile.bubble.mp.public_interface.chat.create.dto.CreateChatResponseDto;
-import com.earuile.bubble.mp.rest.content.UserInfo;
+import com.earuile.bubble.mp.rest.content.ContentMapper;
 import com.earuile.bubble.mp.rest.controller.ValidationService;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetChatInfoRequest;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetChatInfoResponse;
@@ -15,13 +15,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
 public class ChatMapper {
     private final ValidationService validationService;
     private final ChatValidation chatValidation;
-
+    private final ContentMapper contentMapper;
 
     public CreateChatRequestDto mapRequestToDto(CreateChatRequest request) {
         validationService.validateUserId(request.creatorUserId());
@@ -31,12 +32,14 @@ public class ChatMapper {
                 "Name is very long.",
                 "length"
         );
-        request.userIds().forEach(validationService::validateUserId);
+        if (request.userIds() != null) {
+            request.userIds().forEach(validationService::validateUserId);
+        }
 
         return CreateChatRequestDto.builder()
                 .creatorUserId(request.creatorUserId())
                 .name(request.name())
-                .userIds(request.userIds())
+                .userIds(request.userIds() != null ? request.userIds() : new ArrayList<>())
                 .build();
     }
 
@@ -57,17 +60,7 @@ public class ChatMapper {
 
     public GetChatInfoResponse mapDtoToResponse(GetChatInfoResponseDto responseDto) {
         return GetChatInfoResponse.builder()
-                .chatId(responseDto.chatId())
-                .name(responseDto.name())
-                .users(responseDto.users()
-                        .stream()
-                        .map(userInfoDto -> UserInfo.builder()
-                                .id(userInfoDto.id())
-                                .login(userInfoDto.login())
-                                .name(userInfoDto.name())
-                                .build())
-                        .toList())
-                .time(responseDto.time().toEpochSecond(ZoneOffset.UTC))
+                .chatInfo(contentMapper.mapDtoToInfo(responseDto.chatInfoDto()))
                 .build();
     }
 

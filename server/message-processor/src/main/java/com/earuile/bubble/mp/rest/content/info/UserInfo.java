@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.rest.content;
+package com.earuile.bubble.mp.rest.content.info;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

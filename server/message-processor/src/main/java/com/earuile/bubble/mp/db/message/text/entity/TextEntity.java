@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.db.content.text.entity;
+package com.earuile.bubble.mp.db.message.text.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
