@@ -7,7 +7,7 @@ import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistra
 import com.earuile.bubble.mp.public_interface.user.user_info.GetUserInfoRequestDto;
 import com.earuile.bubble.mp.public_interface.user.user_info.GetUserInfoResponseDto;
 import com.earuile.bubble.mp.rest.content.ContentMapper;
-import com.earuile.bubble.mp.rest.controller.ValidationService;
+import com.earuile.bubble.mp.rest.validation.ValidationService;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsRequest;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsResponse;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationRequest;

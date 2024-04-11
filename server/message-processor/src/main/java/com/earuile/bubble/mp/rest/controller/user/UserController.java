@@ -12,13 +12,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -41,7 +44,7 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/registration")
-    public UserRegistrationResponse register(@RequestBody UserRegistrationRequest request) {
+    public UserRegistrationResponse register(@RequestBody @Valid UserRegistrationRequest request) {
         return mapper.mapDtoToResponse(
                 userService.register(
                         mapper.mapRequestToDto(request)
@@ -63,7 +66,7 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/chats")
-    public UserGetChatsResponse getChats(@RequestBody UserGetChatsRequest request) {
+    public UserGetChatsResponse getChats(@RequestBody @Valid UserGetChatsRequest request) {
         return mapper.mapDtoToResponse(
                 userService.getChats(
                         mapper.mapRequestToDto(request)
@@ -85,7 +88,7 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/ch1")
-    public GetUserInfoResponse get(@RequestBody GetUserInfoRequest request) {
+    public GetUserInfoResponse get(@RequestBody @Valid GetUserInfoRequest request) {
         return mapper.mapDtoToResponse(
                 userService.get(
                         mapper.mapRequestToDto(request)

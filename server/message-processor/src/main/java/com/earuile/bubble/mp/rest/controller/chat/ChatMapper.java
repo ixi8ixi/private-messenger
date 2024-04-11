@@ -1,22 +1,28 @@
 package com.earuile.bubble.mp.rest.controller.chat;
 
+import com.earuile.bubble.mp.public_interface.chat.add_user.dto.AddUsersToChatRequestDto;
+import com.earuile.bubble.mp.public_interface.chat.add_user.dto.AddUsersToChatResponseDto;
 import com.earuile.bubble.mp.public_interface.chat.chat_info.dto.GetChatInfoRequestDto;
 import com.earuile.bubble.mp.public_interface.chat.chat_info.dto.GetChatInfoResponseDto;
 import com.earuile.bubble.mp.public_interface.chat.create.dto.CreateChatRequestDto;
 import com.earuile.bubble.mp.public_interface.chat.create.dto.CreateChatResponseDto;
 import com.earuile.bubble.mp.rest.content.ContentMapper;
-import com.earuile.bubble.mp.rest.controller.ValidationService;
+import com.earuile.bubble.mp.rest.validation.ValidationService;
+import com.earuile.bubble.mp.rest.controller.chat.info.end_point.add_user.AddUsersToChatRequest;
+import com.earuile.bubble.mp.rest.controller.chat.info.end_point.add_user.AddUsersToChatResponse;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetChatInfoRequest;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetChatInfoResponse;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.create.CreateChatRequest;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.create.CreateChatResponse;
 import com.earuile.bubble.mp.rest.controller.chat.validation.ChatValidation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ChatMapper {
@@ -51,6 +57,16 @@ public class ChatMapper {
                 .build();
     }
 
+    public AddUsersToChatRequestDto mapRequestToDto(AddUsersToChatRequest request) {
+        validationService.validateChatId(request.chatId());
+        request.userIds().forEach(validationService::validateUserId);
+
+        return AddUsersToChatRequestDto.builder()
+                .chatId(request.chatId())
+                .userIds(request.userIds())
+                .build();
+    }
+
     public CreateChatResponse mapDtoToResponse(CreateChatResponseDto responseDto) {
         return CreateChatResponse.builder()
                 .id(responseDto.id())
@@ -61,6 +77,14 @@ public class ChatMapper {
     public GetChatInfoResponse mapDtoToResponse(GetChatInfoResponseDto responseDto) {
         return GetChatInfoResponse.builder()
                 .chatInfo(contentMapper.mapDtoToInfo(responseDto.chatInfoDto()))
+                .time(System.currentTimeMillis())
+                .build();
+    }
+
+    public AddUsersToChatResponse mapDtoToResponse(AddUsersToChatResponseDto responseDto) {
+        return AddUsersToChatResponse.builder()
+                .chatInfo(contentMapper.mapDtoToInfo(responseDto.chatInfo()))
+                .time(System.currentTimeMillis())
                 .build();
     }
 

@@ -1,4 +1,4 @@
-package com.earuile.bubble.mp.rest.controller;
+package com.earuile.bubble.mp.rest.validation;
 
 import com.earuile.bubble.mp.rest.exception.ValidationException;
 import lombok.RequiredArgsConstructor;

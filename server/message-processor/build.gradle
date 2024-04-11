@@ -10,7 +10,7 @@ dependencies {
     implementation libs.bundles.minimal.grpc
     implementation libs.openapi.starter
     implementation libs.openapi.webflux
-
+    implementation libs.spring.validation
 
     testImplementation libs.testcontainers.postgresql
 

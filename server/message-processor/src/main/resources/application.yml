@@ -21,10 +21,10 @@ server:
 management.endpoints.web.exposure.include: metrics
 management.endpoint.metrics.enabled: true
 
-logging:
-  level:
-    org.springframework.orm.jpa: DEBUG
-    org.springframework.transaction: DEBUG
+#logging:
+#  level:
+#    org.springframework.orm.jpa: DEBUG
+#    org.springframework.transaction: DEBUG
 
 springdoc:
   api-docs:

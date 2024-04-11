@@ -7,6 +7,7 @@ import lombok.Builder;
 public record UserInfo(
         @NotBlank String id,
         @NotBlank String login,
-        @NotBlank String name
+        @NotBlank String name,
+        long time
 ) {
 }

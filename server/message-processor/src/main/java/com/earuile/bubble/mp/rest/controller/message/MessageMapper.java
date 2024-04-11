@@ -6,7 +6,7 @@ import com.earuile.bubble.mp.public_interface.message.dto.MessageGetRequestDto;
 import com.earuile.bubble.mp.public_interface.message.dto.MessageGetResponseDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendRequestDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendResponseDto;
-import com.earuile.bubble.mp.rest.controller.ValidationService;
+import com.earuile.bubble.mp.rest.validation.ValidationService;
 import com.earuile.bubble.mp.rest.controller.message.info.end_point.get.MessageGetRequest;
 import com.earuile.bubble.mp.rest.controller.message.info.end_point.get.MessageGetResponse;
 import com.earuile.bubble.mp.rest.controller.message.text.info.end_point.send.TextMessageSendRequest;

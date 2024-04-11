@@ -14,6 +14,7 @@ public class ContentMapper {
                 .id(userEntity.getId())
                 .login(userEntity.getLogin())
                 .name(userEntity.getName())
+                .time(userEntity.getTime())
                 .build();
     }
 
@@ -23,11 +24,7 @@ public class ContentMapper {
                 .name(chatEntity.getName())
                 .users(withoutUsersInfo ? null : chatEntity.getUsers()
                         .stream()
-                        .map(user -> UserInfoDto.builder()
-                                .id(user.getId())
-                                .login(user.getLogin())
-                                .name(user.getName())
-                                .build())
+                        .map(this::mapEntityToDto)
                         .toList())
                 .time(chatEntity.getTime())
                 .build();

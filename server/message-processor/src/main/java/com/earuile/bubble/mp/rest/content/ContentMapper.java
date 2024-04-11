@@ -16,6 +16,7 @@ public class ContentMapper {
                 .id(userInfoDto.id())
                 .login(userInfoDto.login())
                 .name(userInfoDto.name())
+                .time(userInfoDto.time().toEpochSecond(ZoneOffset.UTC))
                 .build();
     }
 
