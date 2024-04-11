@@ -4,7 +4,6 @@ import com.earuile.bubble.core.db.info.UserInfoService;
 import com.earuile.bubble.core.rest.dto.*;
 import com.earuile.bubble.core.rest.config.MessengerServerRestProperty;
 import com.earuile.bubble.public_interface.MessageModelDto;
-import com.earuile.bubble.rest.dto.*;
 import com.earuile.bubble.ui.controllers.chat.PullMessagesCallback;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;

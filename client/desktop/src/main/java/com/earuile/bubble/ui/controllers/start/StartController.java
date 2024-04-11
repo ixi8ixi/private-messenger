@@ -3,6 +3,7 @@ package com.earuile.bubble.ui.controllers.start;
 import com.earuile.bubble.core.db.info.UserInfoService;
 import com.earuile.bubble.ui.controllers.registration.RegistrationController;
 import com.earuile.bubble.ui.controllers.chat.ChatController;
+import com.earuile.bubble.ui.image.ImageRepository;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -22,15 +23,15 @@ public class StartController {
     private final UserInfoService userInfoService;
     private final TaskExecutor threadPoolTaskExecutor;
     private final FxWeaver fxWeaver;
+    private final ImageRepository imageRepository;
 
     @FXML
     ImageView logo;
 
     @FXML
     void initialize() {
-        InputStream iconStream = getClass().getResourceAsStream("../../bubbles_1fae7.png");
-        Image image = new Image(iconStream);
-        logo.setImage(image); // todo to image repository
+
+        logo.setImage(imageRepository.logo()); // todo to image repository
 
         StartLoaderCallback callback = new StartLoaderCallback() {
             @Override

@@ -2,6 +2,7 @@ package com.earuile.bubble.ui;
 
 import com.earuile.bubble.ui.config.SceneStyleProperty;
 import com.earuile.bubble.ui.controllers.start.StartController;
+import com.earuile.bubble.ui.image.ImageRepository;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     private final StageRepository stageRepository;
     private final FxWeaver fxWeaver;
     private final SceneStyleProperty sceneStyleProperty;
+    private final ImageRepository imageRepository;
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
@@ -28,9 +30,8 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         primaryStage.setWidth(600);
         primaryStage.setHeight(600);
 
-        InputStream iconStream = getClass().getResourceAsStream("bubbles_1fae7.png");
-        Image image = new Image(iconStream);
-        primaryStage.getIcons().add(image);
+
+        primaryStage.getIcons().add(imageRepository.logo());
 
         Scene scene = new Scene(fxWeaver.loadView(StartController.class), 520, 600);
         loadStyles(scene);

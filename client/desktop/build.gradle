@@ -1,9 +1,7 @@
 plugins {
     id 'java'
     alias libs.plugins.spring.plugin
-//    id 'io.spring.dependency-management' version '1.1.4'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-//    id 'org.jetbrains.kotlin.jvm' version '1.9.21'
 }
 
 group = 'com.earuile.bubble'
