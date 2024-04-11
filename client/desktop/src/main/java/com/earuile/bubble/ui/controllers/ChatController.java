@@ -48,8 +48,6 @@ public class ChatController {
 
     @FXML
     public void initialize() {
-        Scene scene = stageRepository.getStage().getScene();
-        scene.getStylesheets().add("com/earuile/bubble/ui/controllers/chat-style.css");
 
         messagesArea.setItems(list);
         messagesArea.setCellFactory(p -> new MessageController());

@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: styles
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml

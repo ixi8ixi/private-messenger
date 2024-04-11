@@ -42,8 +42,7 @@ public class AuthController {
 
     @FXML
     void initialize() {
-        Scene scene = stageRepository.getStage().getScene();
-        scene.getStylesheets().add("com/earuile/bubble/ui/controllers/auth-style.css");
+//        Scene scene = stageRepository.getStage().getScene();
 
         RegistrationReadyCallback callback = new RegistrationReadyCallback() {
             @Override

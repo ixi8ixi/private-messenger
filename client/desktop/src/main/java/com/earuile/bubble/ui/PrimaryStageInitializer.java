@@ -1,5 +1,7 @@
 package com.earuile.bubble.ui;
 
+import com.earuile.bubble.ui.config.SceneStyleProperty;
+import com.earuile.bubble.ui.config.UIConfiguration;
 import com.earuile.bubble.ui.controllers.AuthController;
 import com.earuile.bubble.ui.controllers.ChatController;
 import com.earuile.bubble.ui.controllers.StartController;
@@ -20,6 +22,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
 
     private final StageRepository stageRepository;
     private final FxWeaver fxWeaver;
+    private final SceneStyleProperty sceneStyleProperty;
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
@@ -29,15 +32,18 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         primaryStage.setWidth(600);
         primaryStage.setHeight(600);
 
-        InputStream iconStream = getClass().getResourceAsStream("soap-bubble.png");
+        InputStream iconStream = getClass().getResourceAsStream("bubbles_1fae7.png");
         Image image = new Image(iconStream);
         primaryStage.getIcons().add(image);
 
         Scene scene = new Scene(fxWeaver.loadView(StartController.class), 520, 600);
-        scene.getStylesheets().add("/com/earuile/bubble/ui/controllers/start-style.css");
-        primaryStage.setScene(scene);
-
+        loadStyles(scene);
         stageRepository.setStage(primaryStage);
+        primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void loadStyles(Scene scene) {
+        sceneStyleProperty.include().forEach(style -> scene.getStylesheets().add(style));
     }
 }

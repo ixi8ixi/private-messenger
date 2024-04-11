@@ -26,7 +26,7 @@ public class StartController {
 
     @FXML
     void initialize() {
-        InputStream iconStream = getClass().getResourceAsStream("../soap-bubble.png");
+        InputStream iconStream = getClass().getResourceAsStream("../bubbles_1fae7.png");
         Image image = new Image(iconStream);
         logo.setImage(image);
 
