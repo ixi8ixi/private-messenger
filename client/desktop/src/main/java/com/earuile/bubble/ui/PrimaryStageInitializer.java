@@ -1,16 +1,12 @@
 package com.earuile.bubble.ui;
 
 import com.earuile.bubble.ui.config.SceneStyleProperty;
-import com.earuile.bubble.ui.config.UIConfiguration;
-import com.earuile.bubble.ui.controllers.AuthController;
-import com.earuile.bubble.ui.controllers.ChatController;
-import com.earuile.bubble.ui.controllers.StartController;
+import com.earuile.bubble.ui.controllers.start.StartController;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxWeaver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 

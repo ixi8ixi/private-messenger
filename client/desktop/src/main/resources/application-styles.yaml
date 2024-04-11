@@ -1,6 +1,6 @@
 style:
   include:
     - com/earuile/bubble/ui/controllers/color.css
-    - com/earuile/bubble/ui/controllers/start-style.css
-    - com/earuile/bubble/ui/controllers/auth-style.css
-    - com/earuile/bubble/ui/controllers/chat-style.css
+    - com/earuile/bubble/ui/controllers/start/start.css
+    - com/earuile/bubble/ui/controllers/registration/registration.css
+    - com/earuile/bubble/ui/controllers/chat/chat.css
