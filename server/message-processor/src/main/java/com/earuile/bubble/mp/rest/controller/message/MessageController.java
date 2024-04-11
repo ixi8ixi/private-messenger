@@ -6,6 +6,7 @@ import com.earuile.bubble.mp.rest.controller.message.info.end_point.get.MessageG
 import com.earuile.bubble.mp.rest.controller.message.info.end_point.get.MessageGetResponse;
 import com.earuile.bubble.mp.rest.controller.message.text.info.end_point.send.TextMessageSendRequest;
 import com.earuile.bubble.mp.rest.controller.message.text.info.end_point.send.TextMessageSendResponse;
+import com.earuile.bubble.mp.rest.handler.info.ValidationErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,7 +43,7 @@ public class MessageController {
             @ApiResponse(responseCode = "404", description = "Chat not found",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId)",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
     @PostMapping("/ch1")
     public TextMessageSendResponse sendTextMessage(@RequestBody @Valid TextMessageSendRequest request) {
@@ -62,7 +63,7 @@ public class MessageController {
             @ApiResponse(responseCode = "400", description = "Invalid request format",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId or userId)",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
     @GetMapping("/ch1")
     public MessageGetResponse getMessages(@RequestBody @Valid MessageGetRequest request) {

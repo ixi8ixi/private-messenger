@@ -7,6 +7,7 @@ import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRe
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationResponse;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoRequest;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoResponse;
+import com.earuile.bubble.mp.rest.handler.info.ValidationErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,7 +40,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid request format",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Bad length of arguments",
-                    content = @Content),
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
             @ApiResponse(responseCode = "422", description = "Logic incorrect arguments (the login is already in use)",
                     content = @Content)
     })
@@ -63,7 +64,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (userId)",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
     @PostMapping("/chats")
     public UserGetChatsResponse getChats(@RequestBody @Valid UserGetChatsRequest request) {
@@ -85,7 +86,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (id or login is bad) or both are nulls",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
     @PostMapping("/ch1")
     public GetUserInfoResponse get(@RequestBody @Valid GetUserInfoRequest request) {

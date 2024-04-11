@@ -7,6 +7,7 @@ import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetCh
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetChatInfoResponse;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.create.CreateChatRequest;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.create.CreateChatResponse;
+import com.earuile.bubble.mp.rest.handler.info.ValidationErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,7 +43,7 @@ public class ChatController {
             @ApiResponse(responseCode = "404", description = "A user wasn't found for one of the submitted ids",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Bad length of arguments",
-                    content = @Content),
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
     })
     @PostMapping("/creation")
     public CreateChatResponse create(@RequestBody @Valid CreateChatRequest request) {
@@ -64,7 +65,7 @@ public class ChatController {
             @ApiResponse(responseCode = "404", description = "Chat not found",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId)",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
     @PostMapping("/ch1")
     public GetChatInfoResponse get(@RequestBody @Valid GetChatInfoRequest request) {
@@ -86,7 +87,7 @@ public class ChatController {
             @ApiResponse(responseCode = "404", description = "Chat not found or any user not found",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId, userId)",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
     @PatchMapping("/ch1")
     public AddUsersToChatResponse addUsers(@RequestBody @Valid AddUsersToChatRequest request) {
