@@ -1,6 +1,5 @@
 package com.earuile.bubble.mp.db.message.entity;
 
-
 import com.earuile.bubble.mp.db.chat.entity.ChatEntity;
 import com.earuile.bubble.mp.db.user.entity.UserEntity;
 import jakarta.persistence.Entity;
@@ -21,7 +20,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Builder
 @NoArgsConstructor
@@ -44,7 +43,7 @@ public class MessageEntity {
     private ChatEntity chat;
 
     @CreationTimestamp(source = SourceType.DB)
-    private LocalDateTime time;
+    private Instant time;
 
     @Enumerated(EnumType.STRING)
     private ContentType contentType;

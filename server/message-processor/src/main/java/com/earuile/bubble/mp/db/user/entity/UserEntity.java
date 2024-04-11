@@ -21,7 +21,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 @Builder
@@ -43,7 +43,7 @@ public class UserEntity {
     private String name;
 
     @CreationTimestamp(source = SourceType.DB)
-    private LocalDateTime time;
+    private Instant time;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "mp_user_to_chat",

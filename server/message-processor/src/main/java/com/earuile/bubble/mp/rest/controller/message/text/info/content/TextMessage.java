@@ -11,6 +11,6 @@ public record TextMessage(
         @NotBlank String userId,
         String textData,
         String id,
-        Long timeDate
+        Long time
 ) {
 }

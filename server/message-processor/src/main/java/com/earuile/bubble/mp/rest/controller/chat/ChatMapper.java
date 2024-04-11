@@ -7,7 +7,6 @@ import com.earuile.bubble.mp.public_interface.chat.chat_info.dto.GetChatInfoResp
 import com.earuile.bubble.mp.public_interface.chat.create.dto.CreateChatRequestDto;
 import com.earuile.bubble.mp.public_interface.chat.create.dto.CreateChatResponseDto;
 import com.earuile.bubble.mp.rest.content.ContentMapper;
-import com.earuile.bubble.mp.rest.validation.ValidationService;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.add_user.AddUsersToChatRequest;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.add_user.AddUsersToChatResponse;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetChatInfoRequest;
@@ -15,11 +14,11 @@ import com.earuile.bubble.mp.rest.controller.chat.info.end_point.chat_info.GetCh
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.create.CreateChatRequest;
 import com.earuile.bubble.mp.rest.controller.chat.info.end_point.create.CreateChatResponse;
 import com.earuile.bubble.mp.rest.controller.chat.validation.ChatValidation;
+import com.earuile.bubble.mp.rest.validation.ValidationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 @Slf4j
@@ -70,7 +69,7 @@ public class ChatMapper {
     public CreateChatResponse mapDtoToResponse(CreateChatResponseDto responseDto) {
         return CreateChatResponse.builder()
                 .id(responseDto.id())
-                .time(responseDto.time().toEpochSecond(ZoneOffset.UTC))
+                .time(responseDto.time().toEpochMilli())
                 .build();
     }
 

@@ -1,21 +1,19 @@
 package com.earuile.bubble.mp.rest.controller.message;
 
 import com.earuile.bubble.mp.public_interface.message.content.MessageDto;
-import com.earuile.bubble.mp.public_interface.message.text.content.TextDto;
 import com.earuile.bubble.mp.public_interface.message.dto.MessageGetRequestDto;
 import com.earuile.bubble.mp.public_interface.message.dto.MessageGetResponseDto;
+import com.earuile.bubble.mp.public_interface.message.text.content.TextDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendRequestDto;
 import com.earuile.bubble.mp.public_interface.message.text.dto.TextSendResponseDto;
-import com.earuile.bubble.mp.rest.validation.ValidationService;
 import com.earuile.bubble.mp.rest.controller.message.info.end_point.get.MessageGetRequest;
 import com.earuile.bubble.mp.rest.controller.message.info.end_point.get.MessageGetResponse;
+import com.earuile.bubble.mp.rest.controller.message.text.info.content.TextMessage;
 import com.earuile.bubble.mp.rest.controller.message.text.info.end_point.send.TextMessageSendRequest;
 import com.earuile.bubble.mp.rest.controller.message.text.info.end_point.send.TextMessageSendResponse;
-import com.earuile.bubble.mp.rest.controller.message.text.info.content.TextMessage;
+import com.earuile.bubble.mp.rest.validation.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.ZoneOffset;
 
 @Component
 @RequiredArgsConstructor
@@ -49,7 +47,7 @@ public class MessageMapper {
     public TextMessageSendResponse mapDtoToResponse(TextSendResponseDto responseDto) {
         return TextMessageSendResponse.builder()
                 .id(responseDto.messageDto().id())
-                .time(responseDto.messageDto().time().toEpochSecond(ZoneOffset.UTC))
+                .time(responseDto.messageDto().time().toEpochMilli())
                 .build();
     }
 
@@ -80,7 +78,7 @@ public class MessageMapper {
                 .userId(messageDto.userId())
                 .textData(messageTextDto.content().text() + ", hello!")
                 .id(messageDto.id())
-                .timeDate(messageDto.time().toEpochSecond(ZoneOffset.UTC))
+                .time(messageDto.time().toEpochMilli())
                 .build();
     }
 

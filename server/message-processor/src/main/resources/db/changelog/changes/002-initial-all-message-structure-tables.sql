@@ -9,9 +9,9 @@ CREATE TABLE mp_user
 
 CREATE TABLE mp_chat
 (
-    id   VARCHAR(39)  NOT NULL PRIMARY KEY DEFAULT concat('CH-'::varchar, gen_random_uuid()::varchar),
+    id   VARCHAR(39) NOT NULL PRIMARY KEY DEFAULT concat('CH-'::varchar, gen_random_uuid()::varchar),
     name VARCHAR(50) NOT NULL,
-    time TIMESTAMP    NOT NULL
+    time TIMESTAMP   NOT NULL
 );
 
 CREATE TABLE mp_user_to_chat

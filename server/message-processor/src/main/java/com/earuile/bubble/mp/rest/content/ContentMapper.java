@@ -6,8 +6,6 @@ import com.earuile.bubble.mp.rest.content.info.ChatInfo;
 import com.earuile.bubble.mp.rest.content.info.UserInfo;
 import org.springframework.stereotype.Component;
 
-import java.time.ZoneOffset;
-
 @Component
 public class ContentMapper {
 
@@ -16,7 +14,7 @@ public class ContentMapper {
                 .id(userInfoDto.id())
                 .login(userInfoDto.login())
                 .name(userInfoDto.name())
-                .time(userInfoDto.time().toEpochSecond(ZoneOffset.UTC))
+                .time(userInfoDto.time().toEpochMilli())
                 .build();
     }
 
@@ -28,7 +26,7 @@ public class ContentMapper {
                         .stream()
                         .map(this::mapDtoToInfo)
                         .toList())
-                .time(chatInfoDto.time().toEpochSecond(ZoneOffset.UTC))
+                .time(chatInfoDto.time().toEpochMilli())
                 .build();
     }
 

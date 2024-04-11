@@ -7,7 +7,6 @@ import com.earuile.bubble.mp.public_interface.user.registration.dto.UserRegistra
 import com.earuile.bubble.mp.public_interface.user.user_info.GetUserInfoRequestDto;
 import com.earuile.bubble.mp.public_interface.user.user_info.GetUserInfoResponseDto;
 import com.earuile.bubble.mp.rest.content.ContentMapper;
-import com.earuile.bubble.mp.rest.validation.ValidationService;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsRequest;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.chat.UserGetChatsResponse;
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.register.UserRegistrationRequest;
@@ -16,10 +15,9 @@ import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUs
 import com.earuile.bubble.mp.rest.controller.user.info.end_point.user_info.GetUserInfoResponse;
 import com.earuile.bubble.mp.rest.controller.user.validation.UserValidation;
 import com.earuile.bubble.mp.rest.exception.ValidationException;
+import com.earuile.bubble.mp.rest.validation.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.ZoneOffset;
 
 @Component
 @RequiredArgsConstructor
@@ -88,7 +86,7 @@ public class UserMapper {
     public UserRegistrationResponse mapDtoToResponse(UserRegistrationResponseDto responseDto) {
         return UserRegistrationResponse.builder()
                 .userId(responseDto.userId())
-                .time(responseDto.time().toEpochSecond(ZoneOffset.UTC))
+                .time(responseDto.time().toEpochMilli())
                 .build();
     }
 
