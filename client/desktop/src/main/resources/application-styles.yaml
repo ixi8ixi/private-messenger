@@ -4,3 +4,5 @@ style:
     - com/earuile/bubble/ui/controllers/start/start.css
     - com/earuile/bubble/ui/controllers/registration/registration.css
     - com/earuile/bubble/ui/controllers/chat/chat.css
+    - com/earuile/bubble/ui/controllers/chatcell/chatcell.css
+    - com/earuile/bubble/ui/controllers/dialogs/dialogs.css

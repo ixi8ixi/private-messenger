@@ -13,7 +13,15 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
 server:
-  message:
-    uri: "http://192.168.31.54:8082/mp/message/ch1"
-  registration:
-    uri: "http://192.168.31.54:8082/mp/user/registration"
+  host: http://192.168.31.54:8082
+  users:
+    create-new-user: /mp/user/registration
+    all-user-chats: /mp/user/chats
+    get-info: /mp/user/ch1
+  chats:
+    create-chat: /mp/chat/creation
+    append-users: /mp/chat/ch1
+    get-info: /mp/chat/ch1
+  messages:
+    pull-messages: /mp/message/ch1
+    save-message: /mp/message/ch1

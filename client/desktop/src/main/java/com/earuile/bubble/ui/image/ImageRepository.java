@@ -12,7 +12,7 @@ public class ImageRepository {
 
     @PostConstruct
     private void loadImage() {
-        InputStream iconStream = getClass().getResourceAsStream("../bubbles_1fae7.png");
+        InputStream iconStream = getClass().getResourceAsStream("../bubbles_logo.png"); // fixme to config
         image = new Image(iconStream);
     }
 

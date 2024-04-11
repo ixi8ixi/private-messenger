@@ -1,6 +1,7 @@
 package com.earuile.bubble.ui;
 
 import com.earuile.bubble.ui.config.SceneStyleProperty;
+import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.start.StartController;
 import com.earuile.bubble.ui.image.ImageRepository;
 import javafx.scene.Scene;
@@ -33,7 +34,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
 
         primaryStage.getIcons().add(imageRepository.logo());
 
-        Scene scene = new Scene(fxWeaver.loadView(StartController.class), 520, 600);
+        Scene scene = new Scene(fxWeaver.loadView(DialogsController.class), 520, 600);
         loadStyles(scene);
         stageRepository.setStage(primaryStage);
         primaryStage.setScene(scene);

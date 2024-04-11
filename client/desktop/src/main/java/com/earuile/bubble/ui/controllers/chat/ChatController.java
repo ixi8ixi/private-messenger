@@ -1,6 +1,5 @@
 package com.earuile.bubble.ui.controllers.chat;
 
-import com.earuile.bubble.core.rest.SendMessageRestService;
 import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.SimpleController;
@@ -29,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @FxmlView("chat.fxml")
 @RequiredArgsConstructor
 public class ChatController implements SimpleController {
-    private final SendMessageRestService sendMessageRestService;
+//    private final SendMessageRestService sendMessageRestService;
     private final StageRepository stageRepository;
     private final AtomicBoolean displayed = new AtomicBoolean(false);
 
@@ -38,7 +37,7 @@ public class ChatController implements SimpleController {
 
     @FXML
     private JFXListView<MessageModelDto> messagesArea;
-    ObservableList<MessageModelDto> list = FXCollections.observableArrayList();
+    private final ObservableList<MessageModelDto> list = FXCollections.observableArrayList();
 
     @FXML
     private TextField userMessage;
@@ -49,21 +48,20 @@ public class ChatController implements SimpleController {
     };
 
     @FXML
-    public void initialize() {
-
+    void initialize() {
         messagesArea.setItems(list);
         messagesArea.setCellFactory(p -> new MessageController());
         messagesArea.setEditable(false);
 
-        userMessage.setOnKeyPressed(actionEvent -> {
-            if (actionEvent.getCode() == KeyCode.ENTER) {
-                String message = userMessage.getText();
-                userMessage.clear();
-                sendMessageRestService.sendMessage(message);
-            }
-        });
-
-        sendMessageRestService.pullMessages(pullMessagesCallback);
+//        userMessage.setOnKeyPressed(actionEvent -> {
+//            if (actionEvent.getCode() == KeyCode.ENTER) {
+//                String message = userMessage.getText();
+//                userMessage.clear();
+//                sendMessageRestService.sendMessage(message);
+//            }
+//        });
+//
+//        sendMessageRestService.pullMessages(pullMessagesCallback);
     }
 
     // todo перенести в сервис
@@ -71,13 +69,20 @@ public class ChatController implements SimpleController {
     @Scheduled(fixedDelay = 200)
     private void refresh() {
         if (displayed.get()) {
-            sendMessageRestService.pullMessages(pullMessagesCallback);
+//            sendMessageRestService.pullMessages(pullMessagesCallback);
         }
     }
 
     public void show() {
         Stage stage = stageRepository.getStage();
         displayed.set(true);
+        stage.getScene().setRoot(backview); // fixme remove copy-paste
+    }
+
+    public void showForChat(String chatId) {
+        Stage stage = stageRepository.getStage();
+        displayed.set(true);
         stage.getScene().setRoot(backview);
+        messagesArea.getItems().clear();
     }
 }
