@@ -16,7 +16,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +44,7 @@ public class MessageController {
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId)",
                     content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
-    @PostMapping("/ch1")
+    @PostMapping("/to")
     public TextMessageSendResponse sendTextMessage(@RequestBody @Valid TextMessageSendRequest request) {
         return mapper.mapDtoToResponse(
                 textMessageService.save(
@@ -58,14 +57,14 @@ public class MessageController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The messages were found correctly",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = TextMessageSendResponse.class,
+                            schema = @Schema(implementation = MessageGetResponse.class,
                                     description = "Encoded messages"))}),
             @ApiResponse(responseCode = "400", description = "Invalid request format",
                     content = @Content),
             @ApiResponse(responseCode = "415", description = "Incorrect form of the argument (chatId or userId)",
                     content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
     })
-    @GetMapping("/ch1")
+    @PostMapping("/ch1")
     public MessageGetResponse getMessages(@RequestBody @Valid MessageGetRequest request) {
         return mapper.mapDtoToResponse(
                 messageService.get(
