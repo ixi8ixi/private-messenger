@@ -5,16 +5,31 @@ spring:
     url: jdbc:postgresql://localhost:5430/message_processor
     username: postgres_mp
     password: postgres_mp
+  profiles:
+    active: constants
+  application:
+    name: MessageProcessorServer
 
 grpc:
   server:
-    port: 9090
+    port: 9092
     reflection-service-enabled: true
+
+server:
+  port: 8082
 
 management.endpoints.web.exposure.include: metrics
 management.endpoint.metrics.enabled: true
 
-logging:
-  level:
-    org.springframework.orm.jpa: DEBUG
-    org.springframework.transaction: DEBUG
+#logging:
+#  level:
+#    org.springframework.orm.jpa: DEBUG
+#    org.springframework.transaction: DEBUG
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operations-sorter: method
+

@@ -1,4 +1,4 @@
-package com.earuile.common;
+package com.earuile.bubble.common;
 
 import lombok.experimental.UtilityClass;
 
