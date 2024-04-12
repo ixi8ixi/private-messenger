@@ -24,4 +24,4 @@ server:
     get-info: /mp/chat/ch1
   messages:
     pull-messages: /mp/message/ch1
-    save-message: /mp/message/ch1
+    save-message: /mp/message/to
