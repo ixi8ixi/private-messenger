@@ -14,6 +14,10 @@ public class UserInfoService {
     private UserInfoEntity userInfo;
 
     public boolean loadInfo() {
+        if (isPresent()) {
+            return true;
+        }
+
         List<UserInfoEntity> infoList = userInfoRepository.findAll();
         if (!infoList.isEmpty()) {
             userInfo = infoList.getFirst();
