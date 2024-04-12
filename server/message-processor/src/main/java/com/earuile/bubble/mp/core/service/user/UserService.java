@@ -2,7 +2,7 @@ package com.earuile.bubble.mp.core.service.user;
 
 import com.earuile.bubble.mp.core.service.user.exception.CannotRegisterUser;
 import com.earuile.bubble.mp.db.chat.entity.ChatEntity;
-import com.earuile.bubble.mp.db.content.ContentMapper;
+import com.earuile.bubble.mp.db.content.ContentEntityMapper;
 import com.earuile.bubble.mp.db.exception.UserNotFound;
 import com.earuile.bubble.mp.db.user.UserDBService;
 import com.earuile.bubble.mp.db.user.entity.UserEntity;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDBService userDBService;
-    private final ContentMapper contentMapper;
+    private final ContentEntityMapper contentMapper;
 
     public UserRegistrationResponseDto register(UserRegistrationRequestDto requestDto) {
         try {

@@ -7,7 +7,7 @@ import com.earuile.bubble.mp.public_interface.content.dto.UserInfoDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContentMapper {
+public class ContentEntityMapper {
 
     public UserInfoDto mapEntityToDto(UserEntity userEntity) {
         return UserInfoDto.builder()

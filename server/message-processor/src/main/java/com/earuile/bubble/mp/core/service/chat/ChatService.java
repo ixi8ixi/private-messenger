@@ -2,7 +2,7 @@ package com.earuile.bubble.mp.core.service.chat;
 
 import com.earuile.bubble.mp.db.chat.ChatDBService;
 import com.earuile.bubble.mp.db.chat.entity.ChatEntity;
-import com.earuile.bubble.mp.db.content.ContentMapper;
+import com.earuile.bubble.mp.db.content.ContentEntityMapper;
 import com.earuile.bubble.mp.db.exception.ChatNotFound;
 import com.earuile.bubble.mp.db.exception.UserNotFound;
 import com.earuile.bubble.mp.db.user.UserDBService;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ChatService {
     private final ChatDBService chatDBService;
     private final UserDBService userDBService;
-    private final ContentMapper contentMapper;
+    private final ContentEntityMapper contentMapper;
 
     @Transactional
     public CreateChatResponseDto create(CreateChatRequestDto requestDto) {
