@@ -1,6 +1,6 @@
 package com.earuile.bubble.ui.controllers.chatcell;
 
-import com.earuile.bubble.public_interface.DialogModelDto;
+import com.earuile.bubble.public_interface.chat.ChatInfoDto;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class ChatCellController extends JFXListCell<DialogModelDto> {
+public class ChatCellController extends JFXListCell<ChatInfoDto> {
     @FXML
     public AnchorPane dialogPane;
 
@@ -24,15 +24,13 @@ public class ChatCellController extends JFXListCell<DialogModelDto> {
 
     private FXMLLoader loader;
 
-
-
     @FXML
     public void initialize() {
         dialogText.setWrapText(true);
     }
 
     @Override
-    protected void updateItem(DialogModelDto item, boolean empty) {
+    protected void updateItem(ChatInfoDto item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
             setText(null);
@@ -43,8 +41,6 @@ public class ChatCellController extends JFXListCell<DialogModelDto> {
                 loader = new FXMLLoader(getClass().getResource("chatcell.fxml"));
                 loader.setController(this);
 
-//                getStylesheets().add("com/earuile/bubble/ui/controllers/message/message-style.css");
-
                 try {
                     loader.load();
                 } catch (IOException e) {
@@ -53,8 +49,8 @@ public class ChatCellController extends JFXListCell<DialogModelDto> {
             }
 
             dialogName.setText(item.name());
-            dialogText.setText(item.lastMessage());
-            dialogTime.setText(item.time());
+            dialogText.setText("Here should be last message");
+            dialogTime.setText("--:--");
 
             setText(null);
             setGraphic(dialogPane);

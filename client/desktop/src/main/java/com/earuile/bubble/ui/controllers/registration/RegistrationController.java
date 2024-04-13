@@ -1,13 +1,13 @@
 package com.earuile.bubble.ui.controllers.registration;
 
-import com.earuile.bubble.core.db.info.UserInfoService;
+import com.earuile.bubble.core.db.info.UserInfoDBService;
+import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.core.util.LocalizedMessageException;
 import com.earuile.bubble.public_interface.RegisterFormDto;
-import com.earuile.bubble.public_interface.UserInfoDto;
+import com.earuile.bubble.public_interface.UserDataDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.SimpleController;
-import com.earuile.bubble.ui.controllers.chat.ChatController;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -31,7 +31,8 @@ public class RegistrationController implements SimpleController {
     private final FxWeaver fxWeaver;
 
     private final UsersRestService usersRestService;
-    private final UserInfoService userInfoService;
+//    private final UserInfoDBService userInfoDBService;
+    private final UserInfoRepository userInfoRepository;
     private final TaskExecutor threadPoolTaskExecutor;
 
     @FXML
@@ -84,8 +85,8 @@ public class RegistrationController implements SimpleController {
     private void taskToRegister(RegisterFormDto registerFormDto) {
         threadPoolTaskExecutor.execute(() -> {
             try {
-                UserInfoDto infoDto = usersRestService.createNewUser(registerFormDto);
-                userInfoService.updateInfo(infoDto);
+                UserDataDto infoDto = usersRestService.createNewUser(registerFormDto);
+                userInfoDBService.updateInfo(infoDto);
                 Platform.runLater(() -> fxWeaver.loadController(DialogsController.class).show());
             } catch (LocalizedMessageException e) {
                 Platform.runLater(() -> errorMessage.setText(e.getFormattedMessage()));

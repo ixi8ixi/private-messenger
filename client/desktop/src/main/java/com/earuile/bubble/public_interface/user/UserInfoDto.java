@@ -1,8 +1,8 @@
-package com.earuile.bubble.public_interface;
+package com.earuile.bubble.public_interface.user;
 
 public record UserInfoDto(
         String id,
         String login,
         String name,
-        String password
+        Long time
 ) {}
