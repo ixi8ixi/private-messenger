@@ -12,7 +12,15 @@ import java.util.concurrent.ConcurrentMap;
 public class ChatRepository {
     private final ConcurrentMap<String, ChatInfoDto> idToChatInfo = new ConcurrentHashMap<>();
 
-    public void saveChats(List<ChatInfoDto> chats) {
+    public void load() {
+        // todo to be implemented...
+    }
+
+    public void save() {
+        // todo to be implemented...
+    }
+
+    public void updateChats(List<ChatInfoDto> chats) {
         chats.forEach(chatInfo -> idToChatInfo.put(chatInfo.id(), chatInfo));
     }
 

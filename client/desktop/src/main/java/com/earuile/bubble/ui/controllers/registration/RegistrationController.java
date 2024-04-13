@@ -1,6 +1,7 @@
 package com.earuile.bubble.ui.controllers.registration;
 
 import com.earuile.bubble.core.db.info.UserInfoDBService;
+import com.earuile.bubble.core.repository.DataLoader;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.core.util.LocalizedMessageException;
@@ -31,8 +32,8 @@ public class RegistrationController implements SimpleController {
     private final FxWeaver fxWeaver;
 
     private final UsersRestService usersRestService;
-//    private final UserInfoDBService userInfoDBService;
     private final UserInfoRepository userInfoRepository;
+    private final DataLoader dataLoader;
     private final TaskExecutor threadPoolTaskExecutor;
 
     @FXML
@@ -86,7 +87,8 @@ public class RegistrationController implements SimpleController {
         threadPoolTaskExecutor.execute(() -> {
             try {
                 UserDataDto infoDto = usersRestService.createNewUser(registerFormDto);
-                userInfoDBService.updateInfo(infoDto);
+                userInfoRepository.updateInfo(infoDto);
+                dataLoader.load();
                 Platform.runLater(() -> fxWeaver.loadController(DialogsController.class).show());
             } catch (LocalizedMessageException e) {
                 Platform.runLater(() -> errorMessage.setText(e.getFormattedMessage()));

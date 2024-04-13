@@ -44,6 +44,11 @@ public class UsersRestService {
         }
     }
 
+    /**
+     * Pull all user's chats info from server.
+     *
+     * @throws LocalizedMessageException if problems while pull
+     */
     public List<ChatInfoDto> allUserChats(String id) {
         try {
             UserGetChatsRequest request = new UserGetChatsRequest(id);
@@ -74,10 +79,12 @@ public class UsersRestService {
     }
 
     private static ChatInfoDto mapToChatInfoDto(ChatInfo chatInfo) {
+        List<UserInfo> list = chatInfo.users();
+        List<UserInfoDto> rlist = list == null ? null : list.stream().map(UsersRestService::mapToUserInfoDto).toList();
         return new ChatInfoDto(
                 chatInfo.id(),
                 chatInfo.name(),
-                chatInfo.users().stream().map(UsersRestService::mapToUserInfoDto).toList(),
+                rlist,
                 chatInfo.time()
         );
     }

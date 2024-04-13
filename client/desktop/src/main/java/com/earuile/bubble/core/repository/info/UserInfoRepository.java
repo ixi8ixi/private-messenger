@@ -11,13 +11,22 @@ public class UserInfoRepository {
     private final UserInfoDBService userInfoDBService;
     private UserDataDto userInfo;
 
-    public void load() {
+    public boolean load() {
         userInfo = userInfoDBService.load();
+        return userInfo != null;
     }
 
     public void save() {
         if (userInfo != null) {
             userInfoDBService.save(userInfo);
         }
+    }
+
+    public void updateInfo(UserDataDto userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public UserDataDto info() {
+        return userInfo;
     }
 }

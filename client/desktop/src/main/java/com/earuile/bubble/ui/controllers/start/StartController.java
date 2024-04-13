@@ -1,6 +1,7 @@
 package com.earuile.bubble.ui.controllers.start;
 
 import com.earuile.bubble.core.db.info.UserInfoDBService;
+import com.earuile.bubble.core.repository.DataLoader;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.registration.RegistrationController;
 import com.earuile.bubble.ui.image.ImageRepository;
@@ -17,10 +18,10 @@ import org.springframework.stereotype.Component;
 @FxmlView("start.fxml")
 @RequiredArgsConstructor
 public class StartController {
-    private final UserInfoDBService userInfoDBService;
     private final TaskExecutor threadPoolTaskExecutor;
     private final FxWeaver fxWeaver;
     private final ImageRepository imageRepository;
+    private final DataLoader dataLoader;
 
     @FXML
     ImageView logo;
@@ -30,7 +31,7 @@ public class StartController {
         logo.setImage(imageRepository.logo());
 
         threadPoolTaskExecutor.execute(() -> {
-            if (userInfoDBService.loadInfo()) {
+            if (dataLoader.load()) {
                 Platform.runLater(() -> fxWeaver.loadController(DialogsController.class).show());
             } else {
                 Platform.runLater(() -> fxWeaver.loadController(RegistrationController.class).show());

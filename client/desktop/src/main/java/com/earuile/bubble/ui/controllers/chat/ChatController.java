@@ -1,5 +1,6 @@
 package com.earuile.bubble.ui.controllers.chat;
 
+import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.SimpleController;
@@ -28,9 +29,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @FxmlView("chat.fxml")
 @RequiredArgsConstructor
 public class ChatController implements SimpleController {
-//    private final SendMessageRestService sendMessageRestService;
-    private final StageRepository stageRepository;
     private final AtomicBoolean displayed = new AtomicBoolean(false);
+    private final StageRepository stageRepository;
+
+    private final UsersRestService usersRestService;
 
     @FXML
     private AnchorPane backview;
@@ -42,25 +44,20 @@ public class ChatController implements SimpleController {
     @FXML
     private TextField userMessage;
 
-    private final PullMessagesCallback pullMessagesCallback = messageList -> {
-        messagesArea.getItems().addAll(messageList);
-        messagesArea.scrollTo(list.size() - 1);
-    };
-
     @FXML
     void initialize() {
         messagesArea.setItems(list);
         messagesArea.setCellFactory(p -> new MessageController());
         messagesArea.setEditable(false);
 
-//        userMessage.setOnKeyPressed(actionEvent -> {
-//            if (actionEvent.getCode() == KeyCode.ENTER) {
-//                String message = userMessage.getText();
-//                userMessage.clear();
+        userMessage.setOnKeyPressed(actionEvent -> {
+            if (actionEvent.getCode() == KeyCode.ENTER) {
+                String message = userMessage.getText();
+                userMessage.clear();
 //                sendMessageRestService.sendMessage(message);
-//            }
-//        });
-//
+            }
+        });
+
 //        sendMessageRestService.pullMessages(pullMessagesCallback);
     }
 
