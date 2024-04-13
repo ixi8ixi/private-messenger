@@ -14,8 +14,6 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
-
 @Component
 @FxmlView("start.fxml")
 @RequiredArgsConstructor
@@ -30,26 +28,13 @@ public class StartController {
 
     @FXML
     void initialize() {
-
-        logo.setImage(imageRepository.logo()); // todo to image repository
-
-        StartLoaderCallback callback = new StartLoaderCallback() {
-            @Override
-            public void toRegistration() {
-                Platform.runLater(() -> fxWeaver.loadController(RegistrationController.class).show());
-            }
-
-            @Override
-            public void toChats() {
-                Platform.runLater(() -> fxWeaver.loadController(ChatController.class).show());
-            }
-        };
+        logo.setImage(imageRepository.logo());
 
         threadPoolTaskExecutor.execute(() -> {
             if (userInfoService.loadInfo()) {
-                callback.toChats();
+                Platform.runLater(() -> fxWeaver.loadController(ChatController.class).show());
             } else {
-                callback.toRegistration();
+                Platform.runLater(() -> fxWeaver.loadController(RegistrationController.class).show());
             }
         });
     }

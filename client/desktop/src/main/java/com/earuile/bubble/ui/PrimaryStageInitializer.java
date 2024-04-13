@@ -34,7 +34,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
 
         primaryStage.getIcons().add(imageRepository.logo());
 
-        Scene scene = new Scene(fxWeaver.loadView(DialogsController.class), 520, 600);
+        Scene scene = new Scene(fxWeaver.loadView(StartController.class), 520, 600);
         loadStyles(scene);
         stageRepository.setStage(primaryStage);
         primaryStage.setScene(scene);

@@ -20,7 +20,7 @@ public class UserInfoService {
 
         List<UserInfoEntity> infoList = userInfoRepository.findAll();
         if (!infoList.isEmpty()) {
-            userInfo = infoList.getFirst();
+            userInfo = infoList.get(0);
             return true;
         }
         return false;
@@ -38,7 +38,7 @@ public class UserInfoService {
     }
 
     public boolean isPresent() {
-        return userInfo == null;
+        return userInfo != null;
     }
 
     public String id() {
