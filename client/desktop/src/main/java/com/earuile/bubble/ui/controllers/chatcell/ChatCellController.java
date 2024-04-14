@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import lombok.Getter;
 
 import java.io.IOException;
 
@@ -21,6 +22,9 @@ public class ChatCellController extends JFXListCell<ChatInfoDto> {
 
     @FXML
     public Label dialogTime;
+
+    @Getter
+    private String chatId;
 
     private FXMLLoader loader;
 
@@ -48,6 +52,7 @@ public class ChatCellController extends JFXListCell<ChatInfoDto> {
                 }
             }
 
+            chatId = item.id();
             dialogName.setText(item.name());
             dialogText.setText("Here should be last message");
             dialogTime.setText("--:--");

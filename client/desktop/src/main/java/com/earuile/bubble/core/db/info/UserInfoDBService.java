@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserInfoDBService {
     private final UserInfoDBRepository userInfoDBRepository;
-    private UserInfoEntity userInfo;
 
     public UserDataDto load() {
         List<UserInfoEntity> infoList = userInfoDBRepository.findAll();
@@ -36,44 +35,4 @@ public class UserInfoDBService {
                 .build();
         userInfoDBRepository.save(entity);
     }
-
-//    public boolean loadInfo() {
-//        if (isPresent()) {
-//            return true;
-//        }
-//
-//        List<UserInfoEntity> infoList = userInfoRepository.findAll(); // todo change it
-//        if (!infoList.isEmpty()) {
-//            userInfo = infoList.get(0);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public void updateInfo(UserDataDto infoDto) {
-//        UserInfoEntity entity = UserInfoEntity.builder()
-//                .id(infoDto.id())
-//                .login(infoDto.login())
-//                .name(infoDto.name())
-//                .password(infoDto.password())
-//                .build();
-//        userInfoRepository.save(entity);
-//        userInfo = entity;
-//    }
-//
-//    public boolean isPresent() {
-//        return userInfo != null;
-//    }
-//
-//    public String id() {
-//        return userInfo.getId();
-//    }
-//
-//    public String name() {
-//        return userInfo.getName();
-//    }
-//
-//    public String login() {
-//        return userInfo.getLogin();
-//    }
 }

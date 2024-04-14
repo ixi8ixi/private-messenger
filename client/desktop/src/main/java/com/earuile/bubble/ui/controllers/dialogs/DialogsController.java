@@ -50,7 +50,7 @@ public class DialogsController implements SimpleController {
             ChatCellController cell = new ChatCellController();
             cell.setOnMouseClicked(e -> {
                 if (!cell.isEmpty()) {
-                    Platform.runLater(() -> fxWeaver.loadController(ChatController.class).show());
+                    Platform.runLater(() -> fxWeaver.loadController(ChatController.class).showForChat(cell.getChatId()));
                     e.consume();
                 }
             });

@@ -1,5 +1,6 @@
 package com.earuile.bubble.ui;
 
+import com.earuile.bubble.core.repository.DataLoader;
 import com.earuile.bubble.ui.config.SceneStyleProperty;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.start.StartController;
@@ -23,6 +24,8 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
     private final SceneStyleProperty sceneStyleProperty;
     private final ImageRepository imageRepository;
 
+    private final DataLoader dataLoader;
+
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         Stage primaryStage = event.stage;
@@ -37,6 +40,7 @@ public class PrimaryStageInitializer implements ApplicationListener<StageReadyEv
         Scene scene = new Scene(fxWeaver.loadView(StartController.class), 520, 600);
         loadStyles(scene);
         stageRepository.setStage(primaryStage);
+        primaryStage.setOnCloseRequest(windowEvent -> dataLoader.save());
         primaryStage.setScene(scene);
         primaryStage.show();
     }

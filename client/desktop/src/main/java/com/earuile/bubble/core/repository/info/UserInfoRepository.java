@@ -12,6 +12,9 @@ public class UserInfoRepository {
     private UserDataDto userInfo;
 
     public boolean load() {
+        if (userInfo != null) {
+            return true;
+        }
         userInfo = userInfoDBService.load();
         return userInfo != null;
     }

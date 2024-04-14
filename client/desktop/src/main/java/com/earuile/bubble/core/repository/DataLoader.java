@@ -22,6 +22,6 @@ public class DataLoader {
 
     public void save() {
         userInfoRepository.save();
-        chatRepository.load();
+        chatRepository.save();
     }
 }
