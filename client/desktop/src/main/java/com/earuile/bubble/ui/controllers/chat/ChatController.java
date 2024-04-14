@@ -8,6 +8,7 @@ import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.public_interface.SendMessageDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.SimpleController;
+import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.message.MessageController;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
@@ -19,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -38,6 +40,8 @@ import java.util.zip.ZipError;
 @FxmlView("chat.fxml")
 @RequiredArgsConstructor
 public class ChatController {
+    private final FxWeaver fxWeaver;
+
     private final AtomicBoolean displayed = new AtomicBoolean(false);
     private final AtomicReference<String> currentChatId = new AtomicReference<>(null);
     private final AtomicReference<String> lastKnownId = new AtomicReference<>(null);
@@ -74,6 +78,11 @@ public class ChatController {
                         currentChatId.get(), userInfoRepository.info().id(), text);
                 threadPoolTaskExecutor.execute(() -> chatMessageDataController.sendMessage(dto));
             }
+
+            if (actionEvent.getCode() == KeyCode.ESCAPE) {
+                displayed.compareAndSet(true, false);
+                fxWeaver.loadController(DialogsController.class).show();
+            }
         });
     }
 
@@ -91,9 +100,21 @@ public class ChatController {
     public void showForChat(String chatId) {
         Stage stage = stageRepository.getStage();
         currentChatId.set(chatId);
-        displayed.set(true);
-        messagesArea.getItems().clear();
 
-        stage.getScene().setRoot(backview);
+        threadPoolTaskExecutor.execute(() -> {
+            List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
+            if (!msg.isEmpty()) {
+                lastKnownId.set(msg.getLast().messageId());
+            } else {
+                lastKnownId.set(null);
+            }
+
+            Platform.runLater(() -> {
+                displayed.set(true);
+                messagesArea.getItems().clear();
+                messagesArea.getItems().addAll(msg);
+                stage.getScene().setRoot(backview);
+            });
+        });
     }
 }

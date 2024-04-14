@@ -51,4 +51,12 @@ public class MessageRepository {
         mapLock.unlock();
         return new ArrayList<>(messages);
     }
+
+    public List<MessageModelDto> loadCached(String chatId) {
+        List<MessageModelDto> list = chatIdToMessages.get(chatId);
+        if (list == null) {
+            return List.of();
+        }
+        return new ArrayList<>(list);
+    }
 }

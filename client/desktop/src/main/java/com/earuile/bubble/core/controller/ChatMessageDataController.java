@@ -16,12 +16,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RequiredArgsConstructor
 public class ChatMessageDataController {
     private static final int DEFAULT_BATCH_SIZE = 100;
-
     private final MessageRepository messageRepository;
     private final MessagesRestService messagesRestService;
-
     private final ConcurrentMap<String, AtomicBoolean> chatIdToProgress = new ConcurrentHashMap<>();
 
+    public List<MessageModelDto> loadCached(String chatId) {
+        return messageRepository.loadCached(chatId);
+    }
+
+    /**
+     * Pull batch for specified chat after last known id.
+     */
     public List<MessageModelDto> pullMessagesFromServer(String chatId, String lastKnownId) {
         chatIdToProgress.putIfAbsent(chatId, new AtomicBoolean(false));
         if (chatIdToProgress.get(chatId).compareAndSet(false, true)) {

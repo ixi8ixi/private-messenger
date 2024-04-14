@@ -68,6 +68,7 @@ public class DialogsController implements SimpleController {
     @Override
     public void show() {
         Stage stage = stageRepository.getStage();
+        dialogsList.getItems().clear();
         stage.getScene().setRoot(dialogPane);
     }
 }
