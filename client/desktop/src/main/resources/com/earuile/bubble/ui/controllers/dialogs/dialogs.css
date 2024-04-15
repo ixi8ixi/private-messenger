@@ -1,5 +1,18 @@
-#dialogPane, #dialogsList {
+#dialogsList {
+    -fx-background-color: #333333;
+}
+
+#dialogPane {
+    -fx-background-color: #8C8C8C;
+}
+
+#newChatCreationPane {
+    -fx-background-color: #333333;
+}
+
+#newChatNameField, #newChatMembersField {
     -fx-background-color:  #8C8C8C;
+    -fx-text-fill: #FFFFFF;
 }
 
 .list-view .scroll-bar:vertical {

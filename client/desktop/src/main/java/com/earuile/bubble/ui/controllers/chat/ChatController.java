@@ -92,7 +92,10 @@ public class ChatController {
            List<MessageModelDto> msg = chatMessageDataController.pullMessagesFromServer(currentChatId.get(), lastKnownId.get());
            if (msg != null && !msg.isEmpty()) {
                lastKnownId.set(msg.getLast().messageId());
-               Platform.runLater(() -> messagesArea.getItems().addAll(msg));
+               Platform.runLater(() -> {
+                   messagesArea.getItems().addAll(msg);
+                   messagesArea.scrollTo(list.size() - 1);
+               });
            }
        }
     }

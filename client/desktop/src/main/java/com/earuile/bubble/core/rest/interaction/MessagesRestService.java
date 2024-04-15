@@ -41,7 +41,7 @@ public class MessagesRestService {
             return response.textMessages().stream().map(
                     msg -> new MessageModelDto(
                             msg.userId(),
-                            msg.textData().substring(0, msg.textData().length() - 7),// todo to service :)
+                            msg.textData().substring(0, msg.textData().length() - 8),// todo to service :)
                             msg.id(),
                             TIME_FORMATTER.format(
                                     LocalTime.ofInstant(Instant.ofEpochMilli(msg.time()), ZoneId.systemDefault()))
