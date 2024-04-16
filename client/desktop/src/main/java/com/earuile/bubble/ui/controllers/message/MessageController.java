@@ -1,6 +1,7 @@
 package com.earuile.bubble.ui.controllers.message;
 
 import com.earuile.bubble.public_interface.MessageModelDto;
+import com.earuile.bubble.ui.util.UIException;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,12 +42,11 @@ public class MessageController extends JFXListCell<MessageModelDto> {
                 loader = new FXMLLoader(getClass().getResource("message.fxml"));
                 loader.setController(this);
 
-                getStylesheets().add("com/earuile/bubble/ui/controllers/message/message-style.css");
-
                 try {
                     loader.load();
                 } catch (IOException e) {
-                    throw new RuntimeException(e); // fixme !
+                    // todo Add UI exception handling
+                    throw new UIException(e);
                 }
             }
 

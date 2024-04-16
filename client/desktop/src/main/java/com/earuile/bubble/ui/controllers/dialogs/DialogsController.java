@@ -1,10 +1,8 @@
 package com.earuile.bubble.ui.controllers.dialogs;
 
-import com.earuile.bubble.core.repository.chat.ChatRepository;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.interaction.ChatsRestService;
 import com.earuile.bubble.core.rest.interaction.UsersRestService;
-import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.public_interface.chat.ChatInfoDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.SimpleController;
@@ -40,12 +38,11 @@ public class DialogsController implements SimpleController {
     private final FxWeaver fxWeaver;
 
     private final UsersRestService usersRestService;
-    private final UserInfoRepository userInfoRepository;
-
     private final ChatsRestService chatsRestService;
 
+    private final UserInfoRepository userInfoRepository;
+
     private final TaskExecutor threadPoolTaskExecutor;
-    private final ChatRepository chatRepository;
 
     private final AtomicBoolean displayed = new AtomicBoolean(false);
 
@@ -65,9 +62,22 @@ public class DialogsController implements SimpleController {
     private JFXListView<ChatInfoDto> dialogsList;
     ObservableList<ChatInfoDto> list = FXCollections.observableArrayList();
 
+    @Override
+    public void show() {
+        Stage stage = stageRepository.getStage();
+        stage.getScene().setRoot(dialogPane);
+    }
+
     @FXML
     public void initialize() {
         displayed.set(true);
+
+        setUpDialogsList();
+        setUpNewChatCreationPane();
+    }
+
+    private void setUpDialogsList() {
+        dialogsList.getItems().clear();
         dialogsList.setItems(list);
         dialogsList.setCellFactory(p -> {
             ChatCellController cell = new ChatCellController();
@@ -84,12 +94,9 @@ public class DialogsController implements SimpleController {
             return cell;
         });
         dialogsList.setEditable(false);
-//        threadPoolTaskExecutor.execute(() -> {
-//            List<ChatInfoDto> info = usersRestService.allUserChats(userInfoRepository.info().id());
-//            chatRepository.updateChats(info);
-//            Platform.runLater(() -> list.addAll(chatRepository.allChats()));
-//        });
+    }
 
+    private void setUpNewChatCreationPane() {
         newChatCreationPane.setVisible(false);
         newChatCreationPane.setManaged(false);
         dialogPane.setOnKeyPressed(actionEvent -> {
@@ -111,7 +118,7 @@ public class DialogsController implements SimpleController {
                 String chatName = newChatNameField.getText();
                 String members = newChatMembersField.getText();
                 threadPoolTaskExecutor.execute(() -> {
-                    List<String> splittedMembers = members.isBlank()
+                    List<String> splittedMembers = members.isBlank() // fixme
                             ? null : Arrays.stream(members.split(",")).map(String::trim).toList();
                     chatsRestService.createChat(userInfoRepository.info().id(), chatName, splittedMembers);
                 });
@@ -119,8 +126,9 @@ public class DialogsController implements SimpleController {
         });
     }
 
+    // todo Temporary method. Will rewrite when we switch to HTTP2
     @Scheduled(fixedDelay = 200)
-    private void refresh() { // todo выглядит так же, как и работает - но мы видимо в любом случае это переписываем изрядно
+    private void refresh() {
         if (displayed.get()) {
             List<ChatInfoDto> info = usersRestService.allUserChats(userInfoRepository.info().id());
             if (info.size() != dialogsList.getItems().size()) {
@@ -130,12 +138,5 @@ public class DialogsController implements SimpleController {
                 });
             }
         }
-    }
-
-    @Override
-    public void show() {
-        Stage stage = stageRepository.getStage();
-        dialogsList.getItems().clear(); // fixme move to initialize
-        stage.getScene().setRoot(dialogPane);
     }
 }

@@ -2,12 +2,9 @@ package com.earuile.bubble.ui.controllers.chat;
 
 import com.earuile.bubble.core.controller.ChatMessageDataController;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
-import com.earuile.bubble.core.rest.interaction.MessagesRestService;
-import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.public_interface.MessageModelDto;
 import com.earuile.bubble.public_interface.SendMessageDto;
 import com.earuile.bubble.ui.StageRepository;
-import com.earuile.bubble.ui.controllers.SimpleController;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.message.MessageController;
 import com.jfoenix.controls.JFXListView;
@@ -29,7 +26,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.zip.ZipError;
 
 /*
     TODO
@@ -40,19 +36,17 @@ import java.util.zip.ZipError;
 @FxmlView("chat.fxml")
 @RequiredArgsConstructor
 public class ChatController {
+    private final StageRepository stageRepository;
     private final FxWeaver fxWeaver;
 
-    private final AtomicBoolean displayed = new AtomicBoolean(false);
-    private final AtomicReference<String> currentChatId = new AtomicReference<>(null);
-    private final AtomicReference<String> lastKnownId = new AtomicReference<>(null);
-
-    private final StageRepository stageRepository;
-
+    private final UserInfoRepository userInfoRepository;
     private final ChatMessageDataController chatMessageDataController;
 
     private final TaskExecutor threadPoolTaskExecutor;
 
-    private final UserInfoRepository userInfoRepository;
+    private final AtomicBoolean displayed = new AtomicBoolean(false);
+    private final AtomicReference<String> currentChatId = new AtomicReference<>(null);
+    private final AtomicReference<String> lastKnownId = new AtomicReference<>(null);
 
     @FXML
     private AnchorPane backview;
@@ -63,6 +57,27 @@ public class ChatController {
 
     @FXML
     private TextField userMessage;
+
+    public void showForChat(String chatId) {
+        Stage stage = stageRepository.getStage();
+        currentChatId.set(chatId);
+
+        threadPoolTaskExecutor.execute(() -> {
+            List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
+            if (!msg.isEmpty()) {
+                lastKnownId.set(msg.getLast().messageId());
+            } else {
+                lastKnownId.set(null);
+            }
+
+            Platform.runLater(() -> {
+                displayed.set(true);
+                messagesArea.getItems().clear();
+                messagesArea.getItems().addAll(msg);
+                stage.getScene().setRoot(backview);
+            });
+        });
+    }
 
     @FXML
     void initialize() {
@@ -88,36 +103,15 @@ public class ChatController {
 
     @Scheduled(fixedDelay = 200)
     private void refresh() {
-       if (displayed.get()) {
-           List<MessageModelDto> msg = chatMessageDataController.pullMessagesFromServer(currentChatId.get(), lastKnownId.get());
-           if (msg != null && !msg.isEmpty()) {
-               lastKnownId.set(msg.getLast().messageId());
-               Platform.runLater(() -> {
-                   messagesArea.getItems().addAll(msg);
-                   messagesArea.scrollTo(list.size() - 1);
-               });
-           }
-       }
-    }
-
-    public void showForChat(String chatId) {
-        Stage stage = stageRepository.getStage();
-        currentChatId.set(chatId);
-
-        threadPoolTaskExecutor.execute(() -> {
-            List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
-            if (!msg.isEmpty()) {
+        if (displayed.get()) {
+            List<MessageModelDto> msg = chatMessageDataController.pullMessagesFromServer(currentChatId.get(), lastKnownId.get());
+            if (msg != null && !msg.isEmpty()) {
                 lastKnownId.set(msg.getLast().messageId());
-            } else {
-                lastKnownId.set(null);
+                Platform.runLater(() -> {
+                    messagesArea.getItems().addAll(msg);
+                    messagesArea.scrollTo(list.size() - 1);
+                });
             }
-
-            Platform.runLater(() -> {
-                displayed.set(true);
-                messagesArea.getItems().clear();
-                messagesArea.getItems().addAll(msg);
-                stage.getScene().setRoot(backview);
-            });
-        });
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.earuile.bubble.ui.controllers.registration;
 
-import com.earuile.bubble.core.db.info.UserInfoDBService;
 import com.earuile.bubble.core.repository.DataLoader;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.interaction.UsersRestService;
@@ -33,7 +32,9 @@ public class RegistrationController implements SimpleController {
 
     private final UsersRestService usersRestService;
     private final UserInfoRepository userInfoRepository;
+
     private final DataLoader dataLoader;
+
     private final TaskExecutor threadPoolTaskExecutor;
 
     @FXML
@@ -50,6 +51,11 @@ public class RegistrationController implements SimpleController {
 
     @FXML
     Label errorMessage;
+
+    public void show() {
+        Stage stage = stageRepository.getStage();
+        stage.getScene().setRoot(registrationPane);
+    }
 
     @FXML
     void initialize() {
@@ -76,11 +82,6 @@ public class RegistrationController implements SimpleController {
                 taskToRegister(registerDto);
             }
         });
-    }
-
-    public void show() {
-        Stage stage = stageRepository.getStage();
-        stage.getScene().setRoot(registrationPane);
     }
 
     private void taskToRegister(RegisterFormDto registerFormDto) {

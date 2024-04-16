@@ -1,6 +1,5 @@
 package com.earuile.bubble.ui.controllers.start;
 
-import com.earuile.bubble.core.db.info.UserInfoDBService;
 import com.earuile.bubble.core.repository.DataLoader;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.registration.RegistrationController;

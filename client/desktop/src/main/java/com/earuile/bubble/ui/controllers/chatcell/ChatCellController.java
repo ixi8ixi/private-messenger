@@ -1,6 +1,7 @@
 package com.earuile.bubble.ui.controllers.chatcell;
 
 import com.earuile.bubble.public_interface.chat.ChatInfoDto;
+import com.earuile.bubble.ui.util.UIException;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,12 +49,14 @@ public class ChatCellController extends JFXListCell<ChatInfoDto> {
                 try {
                     loader.load();
                 } catch (IOException e) {
-                    throw new RuntimeException(e); // fixme !
+                    // todo Add UI exception handling
+                    throw new UIException(e);
                 }
             }
 
             chatId = item.id();
             dialogName.setText(item.name());
+            // fixme placeholders
             dialogText.setText("Here should be last message");
             dialogTime.setText("--:--");
 
