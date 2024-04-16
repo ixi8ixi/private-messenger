@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.earuile.bubble'
-version = '1.0-SNAPSHOT'
+version = 'bubble-client'
 
 repositories {
     mavenCentral()
@@ -20,12 +20,9 @@ dependencies {
     implementation libs.spring.starter
     implementation libs.spring.javafx.weaver
     implementation libs.spring.web
-//    implementation libs.spring.security
-    implementation libs.spring.actuator
 
     implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
     implementation 'com.jfoenix:jfoenix:9.0.10'
-//    implementation 'org.jetbrains.exposed:exposed-spring-boot-starter:0.38.2'
 
     implementation libs.spring.jpa
     implementation libs.h2.driver
@@ -37,12 +34,8 @@ dependencies {
     testImplementation libs.spring.test
     testCompileOnly libs.lombok
     testAnnotationProcessor libs.lombok
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 test {
     useJUnitPlatform()
 }
-//kotlin {
-//    jvmToolchain(21)
-//}

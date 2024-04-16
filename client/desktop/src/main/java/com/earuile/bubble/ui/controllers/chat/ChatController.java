@@ -1,9 +1,7 @@
 package com.earuile.bubble.ui.controllers.chat;
 
-import com.earuile.bubble.core.controller.ChatMessageDataController;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.interaction.MessagesRestService;
-import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.public_interface.message.MessageModelDto;
 import com.earuile.bubble.public_interface.chat.SendMessageDto;
 import com.earuile.bubble.ui.StageRepository;
@@ -45,7 +43,6 @@ public class ChatController {
 
     private final UserInfoRepository userInfoRepository;
     private final MessagesRestService messagesRestService;
-//    private final ChatMessageDataController chatMessageDataController;
 
     private final ExecutorService uiExecutorService;
 
@@ -70,7 +67,6 @@ public class ChatController {
         uiExecutorService.execute(() -> {
             List<MessageModelDto> msg = messagesRestService.pullMessages(
                     lastKnownId.get(), currentChatId.get(), DEFAULT_BATCH_SIZE);
-//            List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
             if (!msg.isEmpty()) {
                 lastKnownId.set(msg.getLast().messageId());
             } else {
