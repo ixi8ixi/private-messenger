@@ -1,6 +1,5 @@
 package com.earuile.bubble.core.rest.interaction;
 
-import com.earuile.bubble.core.rest.config.property.HostRestProperty;
 import com.earuile.bubble.core.rest.config.property.UsersRestInteractionProperty;
 import com.earuile.bubble.core.rest.dto.*;
 import com.earuile.bubble.core.util.LocalizedMessageException;
@@ -18,7 +17,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UsersRestService {
-    private final HostRestProperty hostRestProperty;
     private final UsersRestInteractionProperty userRestProperty;
     private final RestTemplate restTemplate;
 
@@ -31,7 +29,7 @@ public class UsersRestService {
         try {
             UserRegistrationRequest request = mapToRequest(dto);
             UserRegistrationResponse response =
-                    restTemplate.postForEntity(hostRestProperty.host() + userRestProperty.createNewUser(),
+                    restTemplate.postForEntity(userRestProperty.createNewUser(),
                             request, UserRegistrationResponse.class).getBody();
 
             if (response == null) {
@@ -53,7 +51,7 @@ public class UsersRestService {
         try {
             UserGetChatsRequest request = new UserGetChatsRequest(id);
             UserGetChatsResponse response =
-                    restTemplate.postForEntity(hostRestProperty.host() + userRestProperty.allUserChats(),
+                    restTemplate.postForEntity(userRestProperty.allUserChats(),
                             request, UserGetChatsResponse.class).getBody();
 
             if (response == null) {
@@ -67,7 +65,7 @@ public class UsersRestService {
     }
 
     public void getInfo() {
-        
+        // todo to be implemented ...
     }
 
     private static UserRegistrationRequest mapToRequest(RegisterFormDto dto) {

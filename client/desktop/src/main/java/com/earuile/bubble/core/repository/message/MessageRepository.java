@@ -26,20 +26,6 @@ public class MessageRepository {
         // todo to be implemented
     }
 
-    public void update(String chatId, List<MessageModelDto> messages) {
-        mapLock.lock();
-        if (!chatIdToMessages.containsKey(chatId)) {
-            chatIdToMessages.put(chatId, new ArrayList<>());
-        }
-        chatIdToMessages.get(chatId).addAll(messages);
-        mapLock.unlock();
-    }
-
-//    public void appendToList(String chatId, List<MessageModelDto> to) {
-//        mapLock.lock();
-//        to.addAll(chatIdToMessages.get(chatId));
-//        mapLock.unlock();
-//    }
 
     public List<MessageModelDto> updateAndAppendToList(String chatId, List<MessageModelDto> messages) {
         mapLock.lock();

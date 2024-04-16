@@ -1,6 +1,5 @@
 package com.earuile.bubble.core.rest.interaction;
 
-import com.earuile.bubble.core.rest.config.property.HostRestProperty;
 import com.earuile.bubble.core.rest.config.property.MessagesRestInteractionProperty;
 import com.earuile.bubble.core.rest.dto.*;
 import com.earuile.bubble.core.util.LocalizedMessageException;
@@ -22,7 +21,6 @@ import java.util.List;
 public class MessagesRestService {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
-    private final HostRestProperty hostRestProperty;
     private final MessagesRestInteractionProperty messagesRestInteractionProperty;
     private final RestTemplate restTemplate;
 
@@ -30,7 +28,7 @@ public class MessagesRestService {
         try {
             MessageGetRequest request = new MessageGetRequest(userId, chatId, limit, lastKnownId);
             MessageGetResponse response = restTemplate.postForEntity(
-                    hostRestProperty.host() + messagesRestInteractionProperty.pullMessages(),
+                    messagesRestInteractionProperty.pullMessages(),
                     request, MessageGetResponse.class).getBody();
 
             if (response == null) {
@@ -66,7 +64,7 @@ public class MessagesRestService {
                     ));
 
             TextMessageSendResponse response = restTemplate.postForEntity(
-                    hostRestProperty.host() + messagesRestInteractionProperty.saveMessage(),
+                    messagesRestInteractionProperty.saveMessage(),
                     request, TextMessageSendResponse.class).getBody();
 
             if (response == null) {

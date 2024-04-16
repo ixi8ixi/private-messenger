@@ -2,6 +2,8 @@ package com.earuile.bubble.ui.controllers.chat;
 
 import com.earuile.bubble.core.controller.ChatMessageDataController;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
+import com.earuile.bubble.core.rest.interaction.MessagesRestService;
+import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.public_interface.message.MessageModelDto;
 import com.earuile.bubble.public_interface.chat.SendMessageDto;
 import com.earuile.bubble.ui.StageRepository;
@@ -19,7 +21,6 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -37,11 +38,14 @@ import java.util.concurrent.atomic.AtomicReference;
 @FxmlView("chat.fxml")
 @RequiredArgsConstructor
 public class ChatController {
+    private static final int DEFAULT_BATCH_SIZE = 100;
+
     private final StageRepository stageRepository;
     private final FxWeaver fxWeaver;
 
     private final UserInfoRepository userInfoRepository;
-    private final ChatMessageDataController chatMessageDataController;
+    private final MessagesRestService messagesRestService;
+//    private final ChatMessageDataController chatMessageDataController;
 
     private final ExecutorService uiExecutorService;
 
@@ -64,7 +68,9 @@ public class ChatController {
         currentChatId.set(chatId);
 
         uiExecutorService.execute(() -> {
-            List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
+            List<MessageModelDto> msg = messagesRestService.pullMessages(
+                    lastKnownId.get(), currentChatId.get(), DEFAULT_BATCH_SIZE);
+//            List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
             if (!msg.isEmpty()) {
                 lastKnownId.set(msg.getLast().messageId());
             } else {
@@ -92,7 +98,7 @@ public class ChatController {
                 userMessage.clear();
                 SendMessageDto dto = new SendMessageDto(
                         currentChatId.get(), userInfoRepository.info().id(), text);
-                uiExecutorService.execute(() -> chatMessageDataController.sendMessage(dto));
+                uiExecutorService.execute(() -> messagesRestService.saveMessage(dto));
             }
 
             if (actionEvent.getCode() == KeyCode.ESCAPE) {
@@ -105,7 +111,8 @@ public class ChatController {
     @Scheduled(fixedDelay = 200)
     private void refresh() {
         if (displayed.get()) {
-            List<MessageModelDto> msg = chatMessageDataController.pullMessagesFromServer(currentChatId.get(), lastKnownId.get());
+            List<MessageModelDto> msg = messagesRestService.pullMessages(
+                    lastKnownId.get(), currentChatId.get(), DEFAULT_BATCH_SIZE);
             if (msg != null && !msg.isEmpty()) {
                 lastKnownId.set(msg.getLast().messageId());
                 Platform.runLater(() -> {
