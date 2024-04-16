@@ -1,21 +1,23 @@
+@import "../color.css"
+
 #dialogsList {
-    -fx-background-color: #333333;
+    -fx-background-color: -fx-color-basic-background;
 }
 
 #dialogPane {
-    -fx-background-color: #8C8C8C;
+    -fx-background-color: -fx-color-additional-background;
 }
 
 #newChatCreationPane {
-    -fx-background-color: #333333;
+    -fx-background-color: -fx-color-basic-background;
 }
 
 #newChatNameField, #newChatMembersField {
-    -fx-background-color:  #8C8C8C;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color:  -fx-color-additional-background;
+    -fx-text-fill:         -fx-color-basic-text;
 }
 
 .list-view .scroll-bar:vertical {
-    -fx-scale-x: 0.3;
-    -fx-background-color:  #8C8C8C;
+    -fx-scale-x:           0.3;
+    -fx-background-color:  -fx-color-additional-background;
 }

@@ -1,16 +1,18 @@
+@import "../color.css"
+
 #registrationPane {
-    -fx-background-color:  #333333;
+    -fx-background-color:  -fx-color-basic-background;
 }
 
 #enterTextLabel {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-color-basic-text;
 }
 
 #loginField, #nameField, #passwordField {
-    -fx-background-color:  #8C8C8C;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color:  -fx-color-additional-background;
+    -fx-text-fill:         -fx-color-basic-text;
 }
 
 #errorMessage {
-    -fx-text-fill: #D41340;
+    -fx-text-fill: -fx-color-error-text;
 }
