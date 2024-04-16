@@ -116,18 +116,27 @@ public class DialogsController implements SimpleController {
 
         newChatMembersField.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
-                String chatName = newChatNameField.getText();
-                String members = newChatMembersField.getText();
-                uiExecutorService.execute(() -> {
-                    List<String> splittedMembers = splittedUserIds(members);
-                    chatsRestService.createChat(userInfoRepository.info().id(), chatName, splittedMembers);
-                });
+                checkFieldsLengthAndSendRequest();
             }
         });
     }
 
     private List<String> splittedUserIds(String members) {
         return members.isBlank() ? List.of() : Arrays.stream(members.split(",")).map(String::trim).toList();
+    }
+
+    private void checkFieldsLengthAndSendRequest() {
+        String chatName = newChatNameField.getText();
+        String members = newChatMembersField.getText();
+        if (!chatName.isEmpty() && chatName.length() < 200 // fixme max size to property
+                && members.length() < 2000) {
+            newChatNameField.clear();
+            newChatMembersField.clear();
+            uiExecutorService.execute(() -> {
+                List<String> splittedMembers = splittedUserIds(members);
+                chatsRestService.createChat(userInfoRepository.info().id(), chatName, splittedMembers);
+            });
+        }
     }
 
     // todo Temporary method. Will rewrite when we switch to HTTP2

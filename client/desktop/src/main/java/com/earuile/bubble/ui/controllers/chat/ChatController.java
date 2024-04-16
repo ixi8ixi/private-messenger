@@ -95,10 +95,12 @@ public class ChatController {
         userMessage.setOnKeyPressed(actionEvent -> {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 String text = userMessage.getText();
-                userMessage.clear();
-                SendMessageDto dto = new SendMessageDto(
-                        currentChatId.get(), userInfoRepository.info().id(), text);
-                uiExecutorService.execute(() -> messagesRestService.saveMessage(dto));
+                if (text.length() < 10000) { // fixme max text length to property
+                    userMessage.clear();
+                    SendMessageDto dto = new SendMessageDto(
+                            currentChatId.get(), userInfoRepository.info().id(), text);
+                    uiExecutorService.execute(() -> messagesRestService.saveMessage(dto));
+                }
             }
 
             if (actionEvent.getCode() == KeyCode.ESCAPE) {
