@@ -1,0 +1,10 @@
+@import "../color.css"
+
+#dialogPane {
+    -fx-background-color:  -fx-color-additional-background;
+    -fx-text-fill:         -fx-color-basic-text;
+}
+
+#dialogName, #dialogText, #dialogTime {
+    -fx-text-fill: -fx-color-basic-text;
+}

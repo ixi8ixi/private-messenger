@@ -1,0 +1,29 @@
+spring:
+  main:
+    lazy-initialization: true
+  profiles:
+    active: styles
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  datasource:
+    url: jdbc:h2:file:/bubble/cache
+    username: localdb
+    password: localdb
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+server:
+  host: http://192.168.31.54:8082
+  users:
+    create-new-user: /mp/user/registration
+    all-user-chats: /mp/user/chats
+    get-info: /mp/user/ch1
+  chats:
+    create-chat: /mp/chat/creation
+    append-users: /mp/chat/ch1
+    get-info: /mp/chat/ch1
+  messages:
+    pull-messages: /mp/message/ch1
+    save-message: /mp/message/to

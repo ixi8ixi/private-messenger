@@ -1,0 +1,9 @@
+@import "../color.css"
+
+#startPane {
+    -fx-background-color:  -fx-color-basic-background;
+}
+
+#title {
+    -fx-text-fill: -fx-color-basic-text;
+}

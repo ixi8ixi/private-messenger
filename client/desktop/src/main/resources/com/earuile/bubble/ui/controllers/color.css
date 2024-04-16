@@ -1,0 +1,6 @@
+.root {
+    -fx-color-basic-background:      #333333;
+    -fx-color-additional-background: #8C8C8C;
+    -fx-color-basic-text:            #FFFFFF;
+    -fx-color-error-text:            #D41340;
+}

@@ -1,0 +1,24 @@
+@import "../color.css"
+
+#backview {
+    -fx-background-color: -fx-color-basic-background;
+}
+
+#messagesArea {
+    -fx-background-color:  -fx-color-additional-background;
+    -fx-text-fill:         -fx-color-basic-text;
+}
+
+#userMessage {
+    -fx-background-color: -fx-color-additional-background;
+    -fx-text-fill:        -fx-color-basic-text;
+}
+
+.list-cell {
+    -fx-background-color:  -fx-color-additional-background;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-scale-x:           0.3;
+    -fx-background-color:  -fx-color-additional-background;
+}

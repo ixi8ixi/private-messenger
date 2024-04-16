@@ -1,0 +1,18 @@
+@import "../color.css"
+
+#anPane {
+    -fx-background-color:  -fx-color-additional-background;
+    -fx-text-fill:         -fx-color-basic-text;
+}
+
+#time {
+    -fx-text-fill: -fx-color-basic-text;
+}
+
+#text {
+    -fx-text-fill: -fx-color-basic-text;
+}
+
+#username {
+    -fx-text-fill: -fx-color-basic-text;
+}
