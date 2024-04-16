@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
@@ -42,7 +43,7 @@ public class DialogsController implements SimpleController {
 
     private final UserInfoRepository userInfoRepository;
 
-    private final TaskExecutor threadPoolTaskExecutor;
+    private final ExecutorService uiExecutorService;
 
     private final AtomicBoolean displayed = new AtomicBoolean(false);
 
@@ -117,7 +118,7 @@ public class DialogsController implements SimpleController {
             if (actionEvent.getCode() == KeyCode.ENTER) {
                 String chatName = newChatNameField.getText();
                 String members = newChatMembersField.getText();
-                threadPoolTaskExecutor.execute(() -> {
+                uiExecutorService.execute(() -> {
                     List<String> splittedMembers = members.isBlank() // fixme
                             ? null : Arrays.stream(members.split(",")).map(String::trim).toList();
                     chatsRestService.createChat(userInfoRepository.info().id(), chatName, splittedMembers);

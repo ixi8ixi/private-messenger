@@ -4,8 +4,8 @@ import com.earuile.bubble.core.repository.DataLoader;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.interaction.UsersRestService;
 import com.earuile.bubble.core.util.LocalizedMessageException;
-import com.earuile.bubble.public_interface.RegisterFormDto;
-import com.earuile.bubble.public_interface.UserDataDto;
+import com.earuile.bubble.public_interface.user.RegisterFormDto;
+import com.earuile.bubble.public_interface.user.UserDataDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.SimpleController;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
@@ -23,6 +23,8 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutorService;
+
 @Component
 @FxmlView("registration.fxml")
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class RegistrationController implements SimpleController {
 
     private final DataLoader dataLoader;
 
-    private final TaskExecutor threadPoolTaskExecutor;
+    private final ExecutorService uiExecutorService;
 
     @FXML
     VBox registrationPane;
@@ -85,7 +87,7 @@ public class RegistrationController implements SimpleController {
     }
 
     private void taskToRegister(RegisterFormDto registerFormDto) {
-        threadPoolTaskExecutor.execute(() -> {
+        uiExecutorService.execute(() -> {
             try {
                 UserDataDto infoDto = usersRestService.createNewUser(registerFormDto);
                 userInfoRepository.updateInfo(infoDto);

@@ -1,7 +1,6 @@
 package com.earuile.bubble.core.repository.message;
 
-import com.earuile.bubble.core.rest.interaction.MessagesRestService;
-import com.earuile.bubble.public_interface.MessageModelDto;
+import com.earuile.bubble.public_interface.message.MessageModelDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

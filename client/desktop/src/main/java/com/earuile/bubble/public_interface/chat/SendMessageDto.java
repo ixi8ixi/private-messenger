@@ -1,4 +1,4 @@
-package com.earuile.bubble.public_interface;
+package com.earuile.bubble.public_interface.chat;
 
 public record SendMessageDto(
         String chatId,

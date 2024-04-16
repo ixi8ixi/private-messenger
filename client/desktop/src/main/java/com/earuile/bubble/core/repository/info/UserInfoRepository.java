@@ -1,7 +1,7 @@
 package com.earuile.bubble.core.repository.info;
 
 import com.earuile.bubble.core.db.info.UserInfoDBService;
-import com.earuile.bubble.public_interface.UserDataDto;
+import com.earuile.bubble.public_interface.user.UserDataDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

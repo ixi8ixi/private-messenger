@@ -1,12 +1,11 @@
 package com.earuile.bubble.core.rest.interaction;
 
-import com.earuile.bubble.core.repository.info.UserInfoRepository;
 import com.earuile.bubble.core.rest.config.property.HostRestProperty;
 import com.earuile.bubble.core.rest.config.property.MessagesRestInteractionProperty;
 import com.earuile.bubble.core.rest.dto.*;
 import com.earuile.bubble.core.util.LocalizedMessageException;
-import com.earuile.bubble.public_interface.MessageModelDto;
-import com.earuile.bubble.public_interface.SendMessageDto;
+import com.earuile.bubble.public_interface.message.MessageModelDto;
+import com.earuile.bubble.public_interface.chat.SendMessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;

@@ -1,6 +1,6 @@
 package com.earuile.bubble.ui.controllers.message;
 
-import com.earuile.bubble.public_interface.MessageModelDto;
+import com.earuile.bubble.public_interface.message.MessageModelDto;
 import com.earuile.bubble.ui.util.UIException;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;

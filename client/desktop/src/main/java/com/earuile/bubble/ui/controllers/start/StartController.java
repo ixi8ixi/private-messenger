@@ -13,14 +13,18 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutorService;
+
 @Component
 @FxmlView("start.fxml")
 @RequiredArgsConstructor
 public class StartController {
-    private final TaskExecutor threadPoolTaskExecutor;
-    private final FxWeaver fxWeaver;
     private final ImageRepository imageRepository;
+    private final FxWeaver fxWeaver;
+
     private final DataLoader dataLoader;
+
+    private final ExecutorService uiExecutorService;
 
     @FXML
     ImageView logo;
@@ -29,7 +33,7 @@ public class StartController {
     void initialize() {
         logo.setImage(imageRepository.logo());
 
-        threadPoolTaskExecutor.execute(() -> {
+        uiExecutorService.execute(() -> {
             if (dataLoader.load()) {
                 Platform.runLater(() -> fxWeaver.loadController(DialogsController.class).show());
             } else {

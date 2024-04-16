@@ -2,8 +2,8 @@ package com.earuile.bubble.ui.controllers.chat;
 
 import com.earuile.bubble.core.controller.ChatMessageDataController;
 import com.earuile.bubble.core.repository.info.UserInfoRepository;
-import com.earuile.bubble.public_interface.MessageModelDto;
-import com.earuile.bubble.public_interface.SendMessageDto;
+import com.earuile.bubble.public_interface.message.MessageModelDto;
+import com.earuile.bubble.public_interface.chat.SendMessageDto;
 import com.earuile.bubble.ui.StageRepository;
 import com.earuile.bubble.ui.controllers.dialogs.DialogsController;
 import com.earuile.bubble.ui.controllers.message.MessageController;
@@ -24,6 +24,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -42,7 +43,7 @@ public class ChatController {
     private final UserInfoRepository userInfoRepository;
     private final ChatMessageDataController chatMessageDataController;
 
-    private final TaskExecutor threadPoolTaskExecutor;
+    private final ExecutorService uiExecutorService;
 
     private final AtomicBoolean displayed = new AtomicBoolean(false);
     private final AtomicReference<String> currentChatId = new AtomicReference<>(null);
@@ -62,7 +63,7 @@ public class ChatController {
         Stage stage = stageRepository.getStage();
         currentChatId.set(chatId);
 
-        threadPoolTaskExecutor.execute(() -> {
+        uiExecutorService.execute(() -> {
             List<MessageModelDto> msg = chatMessageDataController.loadCached(currentChatId.get());
             if (!msg.isEmpty()) {
                 lastKnownId.set(msg.getLast().messageId());
@@ -91,7 +92,7 @@ public class ChatController {
                 userMessage.clear();
                 SendMessageDto dto = new SendMessageDto(
                         currentChatId.get(), userInfoRepository.info().id(), text);
-                threadPoolTaskExecutor.execute(() -> chatMessageDataController.sendMessage(dto));
+                uiExecutorService.execute(() -> chatMessageDataController.sendMessage(dto));
             }
 
             if (actionEvent.getCode() == KeyCode.ESCAPE) {
